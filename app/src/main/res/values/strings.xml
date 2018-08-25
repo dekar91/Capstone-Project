@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Qr4all</string>
+    <string name="server_url">http://qr4all.ru/</string>
 </resources>
