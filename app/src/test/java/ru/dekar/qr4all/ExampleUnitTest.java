@@ -1,4 +1,4 @@
-package ru.qr4all.qr4all;
+package ru.dekar.qr4all;
 
 import org.junit.Test;
 
