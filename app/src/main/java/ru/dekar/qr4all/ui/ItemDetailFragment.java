@@ -1,10 +1,15 @@
 package ru.dekar.qr4all.ui;
 
+import android.content.Intent;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import ru.dekar.qr4all.R;
@@ -55,8 +60,25 @@ public class ItemDetailFragment extends Fragment {
         // Show the dummy content as text in a TextView.
         if (mItem != null) {
             ((TextView) rootView.findViewById(R.id.item_detail)).setText(mItem.details);
+
+             Button img = getActivity().findViewById(R.id.showQrCode);
+            img.setOnClickListener(
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Log.v("text","text click");
+                            startActivity(new Intent(getActivity(), ShowQrActivity.class));
+                        }
+                    });
         }
 
         return rootView;
     }
+
+
+    public void showQrCode()
+    {
+        startActivity(new Intent(getActivity(), ShowQrActivity.class));
+    }
+
 }

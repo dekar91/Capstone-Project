@@ -69,7 +69,7 @@ public class ItemListActivity extends Activity {
                     arguments.putString(ItemDetailFragment.ARG_ITEM_ID, item.id);
                     ItemDetailFragment fragment = new ItemDetailFragment();
                     fragment.setArguments(arguments);
-                    mParentActivity.getSupportFragmentManager().beginTransaction()
+                    mParentActivity.getFragmentManager().beginTransaction()
                             .replace(R.id.item_detail_container, fragment)
                             .commit();
                 } else {
