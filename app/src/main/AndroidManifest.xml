@@ -34,7 +34,7 @@
             android:label="@string/title_activity_login" />
         <activity
             android:name=".ui.ItemListActivity"
-            android:label="@string/title_item_list"></activity>
+            android:label="@string/title_item_list" />
         <activity
             android:name=".ui.ItemDetailActivity"
             android:label="@string/title_item_detail"
@@ -43,6 +43,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ru.dekar.qr4all.ui.ItemListActivity" />
         </activity>
+        <activity android:name=".ui.EditActivity"></activity>
     </application>
 
 </manifest>
