@@ -18,6 +18,7 @@ import com.squareup.picasso.Picasso;
 import ru.dekar.qr4all.R;
 import ru.dekar.qr4all.models.ItemContent;
 import ru.dekar.qr4all.models.ItemEntity;
+import ru.dekar.qr4all.services.UpdateItemService;
 
 /**
  * A fragment representing a single Item detail screen.
@@ -81,6 +82,9 @@ public class ItemDetailFragment extends Fragment {
                         }
                     });
         }
+
+        // Update widget
+        UpdateItemService.startUpdateItemService(getContext(), mItem);
 
         return rootView;
     }

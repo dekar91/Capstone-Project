@@ -41,9 +41,12 @@
                 android:value="ru.dekar.qr4all.ui.ItemListActivity" />
         </activity>
 
+        <service android:name=".services.UpdateItemService" />
+
         <receiver android:name="ru.dekar.AppWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.appwidget.action.APPWIDGET_PICKITEMS" />
             </intent-filter>
 
             <meta-data
