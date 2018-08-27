@@ -3,12 +3,17 @@ package ru.dekar.qr4all.ui;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
+
+import com.squareup.picasso.Picasso;
 
 import ru.dekar.qr4all.R;
+import ru.dekar.qr4all.models.ItemContent;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -20,6 +25,7 @@ public class ShowQrActivity extends Activity {
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
      */
     private static final boolean AUTO_HIDE = true;
+    private ItemContent.ItemModel mItem;
 
     /**
      * If {@link #AUTO_HIDE} is set, the number of milliseconds to wait after
@@ -88,12 +94,15 @@ public class ShowQrActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mItem = ItemContent.ITEM_MAP.get(getIntent().getStringExtra("itemId"));
 
         setContentView(R.layout.activity_show_qr);
 
         mVisible = true;
         mControlsView = findViewById(R.id.fullscreen_content_controls);
-        mContentView = findViewById(R.id.fullscreen_content);
+        mContentView = findViewById(R.id.qrcodeImageView);
+        Picasso.get().load(Uri.parse(mItem.codeUrl)).into((ImageView) mContentView);
+
 
 
         // Set up the user interaction to manually show or hide the system UI.

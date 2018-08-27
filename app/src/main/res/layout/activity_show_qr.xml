@@ -24,26 +24,24 @@
         android:layout_gravity="bottom|center_horizontal"
         android:background="@color/black_overlay"
         android:orientation="horizontal"
-        tools:ignore="UselessParent"><![CDATA[
+        tools:ignore="UselessParent"/>
 
-
-        android:src="@color/accent" />
-
-
-
-        ]]></LinearLayout>
-
-    <FrameLayout
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true">
 
         <ImageView
-            android:id="@+id/fullscreen_content"
-            android:layout_width="0dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/qrcodeImageView"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="6dp"
             android:layout_weight="1" />
 
-    </FrameLayout>
+    </android.support.constraint.ConstraintLayout>
 
 </FrameLayout>

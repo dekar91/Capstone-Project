@@ -1,6 +1,7 @@
 package ru.dekar.qr4all.models;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,7 +39,7 @@ public class ItemContent {
     }
 
     private static ItemModel createDummyItem(int position) {
-        return new ItemModel(String.valueOf(position), "Item " + position, makeDetails(position), "imageLink", "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/330px-Image_created_with_a_mobile_phone.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/440px-Image_created_with_a_mobile_phone.png 2x");
+        return new ItemModel(String.valueOf(position), "Item " + position, makeDetails(position), "https://sun9-2.userapi.com/c848528/v848528244/5e0b9/jeKl_8DcVoY.jpg", "https://sun9-2.userapi.com/c848528/v848528244/5e0b9/jeKl_8DcVoY.jpg", null);
     }
 
     private static String makeDetails(int position) {
@@ -59,13 +60,19 @@ public class ItemContent {
         public final String details;
         public final String imageUrl;
         public final String codeUrl;
+        public final Date updatedAt;
 
-        public ItemModel(String id, String name, String details, String imageUrl, String codeUrl) {
+        public ItemModel(String id, String name, String details, String imageUrl, String codeUrl, Date updatedAt) {
             this.id = id;
             this.name = name;
             this.details = details;
             this.imageUrl = imageUrl;
             this.codeUrl = codeUrl;
+
+            if(null== updatedAt)
+                this.updatedAt = new Date();
+            else
+                this.updatedAt = updatedAt;
         }
 
         @Override

@@ -70,7 +70,7 @@ public class ItemDetailFragment extends Fragment {
         if (mItem != null) {
             ((MultiAutoCompleteTextView) rootView.findViewById(R.id.item_description)).setText(mItem.details);
             ((TextInputEditText) rootView.findViewById(R.id.itemName)).setText(mItem.name);
-            Picasso.get().load(Uri.parse(mItem.codeUrl)).into((ImageView) rootView.findViewById(R.id.itemPhoto));
+            Picasso.get().load(Uri.parse(mItem.imageUrl)).into((ImageView) rootView.findViewById(R.id.itemPhoto));
 //            ((ImageView) rootView.findViewById(R.id.co)).setImageURI(mUri);
 
              Button img = rootView.findViewById(R.id.showQrCode);
@@ -79,18 +79,12 @@ public class ItemDetailFragment extends Fragment {
                         @Override
                         public void onClick(View view) {
                             Log.v("text","text click");
-                            startActivity(new Intent(getActivity(), ShowQrActivity.class));
+                            startActivity((new Intent(getActivity(), ShowQrActivity.class)).putExtra("itemId", mItem.id));
                         }
                     });
         }
 
         return rootView;
-    }
-
-
-    public void showQrCode()
-    {
-        startActivity(new Intent(getActivity(), ShowQrActivity.class));
     }
 
 }
