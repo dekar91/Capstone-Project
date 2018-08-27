@@ -1,5 +1,6 @@
 package ru.dekar.qr4all.models;
 
+import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
@@ -13,8 +14,11 @@ public class ItemEntity {
     private int id;
     private String name;
     private String details;
+    @ColumnInfo(name = "image_url")
     private String imageUrl;
+    @ColumnInfo(name = "code_url")
     private String codeUrl;
+    @ColumnInfo(name = "updated_at")
     private Date updatedAt;
 
     public ItemEntity(String name, String details, String imageUrl, String codeUrl, Date updatedAt) {

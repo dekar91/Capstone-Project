@@ -52,7 +52,8 @@ public class ItemListActivity extends Activity {
     }
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
-        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(this, ItemContent.ITEMS, mTwoPane));
+        ItemContent mItemContent = new ItemContent(this);
+        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(this, mItemContent.ITEMS, mTwoPane));
     }
 
     public static class SimpleItemRecyclerViewAdapter

@@ -6,14 +6,14 @@ import android.arch.persistence.room.PrimaryKey;
 import java.util.Date;
 
 @Entity(tableName = "token")
-public class Token {
+public class TokenEntity {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String token;
     private Date expires;
 
-    public Token(int id, String token, Date expires)
+    public TokenEntity(int id, String token, Date expires)
     {
         this.id = id;
         this.token = token;

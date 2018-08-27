@@ -95,7 +95,8 @@ public class ShowQrActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mItem = ItemContent.ITEM_MAP.get(String.valueOf(getIntent().getIntExtra("itemId", -1)));
+        ItemContent mItemContent = new ItemContent(this);
+        mItem = mItemContent.ITEM_MAP.get(String.valueOf(getIntent().getIntExtra("itemId", -1)));
 
         // TODO: return to previous activity if -1
 
