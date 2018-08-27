@@ -9,18 +9,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.MultiAutoCompleteTextView;
-import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import java.net.URL;
-
 import ru.dekar.qr4all.R;
 import ru.dekar.qr4all.models.ItemContent;
+import ru.dekar.qr4all.models.ItemEntity;
 
 /**
  * A fragment representing a single Item detail screen.
@@ -38,7 +35,7 @@ public class ItemDetailFragment extends Fragment {
     /**
      * The dummy content this fragment is presenting.
      */
-    private ItemContent.ItemModel mItem;
+    private ItemEntity mItem;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -68,9 +65,9 @@ public class ItemDetailFragment extends Fragment {
 
         // Show the dummy content as text in a TextView.
         if (mItem != null) {
-            ((MultiAutoCompleteTextView) rootView.findViewById(R.id.item_description)).setText(mItem.details);
-            ((TextInputEditText) rootView.findViewById(R.id.itemName)).setText(mItem.name);
-            Picasso.get().load(Uri.parse(mItem.imageUrl)).into((ImageView) rootView.findViewById(R.id.itemPhoto));
+            ((MultiAutoCompleteTextView) rootView.findViewById(R.id.item_description)).setText(mItem.getDetails());
+            ((TextInputEditText) rootView.findViewById(R.id.itemName)).setText(mItem.getName());
+            Picasso.get().load(Uri.parse(mItem.getImageUrl())).into((ImageView) rootView.findViewById(R.id.itemPhoto));
 //            ((ImageView) rootView.findViewById(R.id.co)).setImageURI(mUri);
 
              Button img = rootView.findViewById(R.id.showQrCode);
@@ -79,7 +76,7 @@ public class ItemDetailFragment extends Fragment {
                         @Override
                         public void onClick(View view) {
                             Log.v("text","text click");
-                            startActivity((new Intent(getActivity(), ShowQrActivity.class)).putExtra("itemId", mItem.id));
+                            startActivity((new Intent(getActivity(), ShowQrActivity.class)).putExtra("itemId", mItem.getId()));
                         }
                     });
         }

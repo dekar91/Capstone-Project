@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import ru.dekar.qr4all.R;
 import ru.dekar.qr4all.models.ItemContent;
+import ru.dekar.qr4all.models.ItemEntity;
 
 import java.util.List;
 
@@ -58,15 +59,15 @@ public class ItemListActivity extends Activity {
             extends RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder> {
 
         private final ItemListActivity mParentActivity;
-        private final List<ItemContent.ItemModel> mValues;
+        private final List<ItemEntity> mValues;
         private final boolean mTwoPane;
         private final View.OnClickListener mOnClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ItemContent.ItemModel item = (ItemContent.ItemModel) view.getTag();
+                ItemEntity item = (ItemEntity) view.getTag();
                 if (mTwoPane) {
                     Bundle arguments = new Bundle();
-                    arguments.putString(ItemDetailFragment.ARG_ITEM_ID, item.id);
+                    arguments.putString(ItemDetailFragment.ARG_ITEM_ID, String.valueOf(item.getId()));
                     ItemDetailFragment fragment = new ItemDetailFragment();
                     fragment.setArguments(arguments);
                     mParentActivity.getFragmentManager().beginTransaction()
@@ -75,7 +76,7 @@ public class ItemListActivity extends Activity {
                 } else {
                     Context context = view.getContext();
                     Intent intent = new Intent(context, ItemDetailActivity.class);
-                    intent.putExtra(ItemDetailFragment.ARG_ITEM_ID, item.id);
+                    intent.putExtra(ItemDetailFragment.ARG_ITEM_ID, String.valueOf(item.getId()));
 
                     context.startActivity(intent);
                 }
@@ -83,7 +84,7 @@ public class ItemListActivity extends Activity {
         };
 
         SimpleItemRecyclerViewAdapter(ItemListActivity parent,
-                                      List<ItemContent.ItemModel> items,
+                                      List<ItemEntity> items,
                                       boolean twoPane) {
             mValues = items;
             mParentActivity = parent;
@@ -99,8 +100,8 @@ public class ItemListActivity extends Activity {
 
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
-            holder.mIdView.setText(mValues.get(position).id);
-            holder.mContentView.setText(mValues.get(position).name);
+//            holder.mIdView.setText(mValues.get(position).getId());
+            holder.mContentView.setText(mValues.get(position).getName());
 
             holder.itemView.setTag(mValues.get(position));
             holder.itemView.setOnClickListener(mOnClickListener);

@@ -14,6 +14,7 @@ import com.squareup.picasso.Picasso;
 
 import ru.dekar.qr4all.R;
 import ru.dekar.qr4all.models.ItemContent;
+import ru.dekar.qr4all.models.ItemEntity;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -25,7 +26,7 @@ public class ShowQrActivity extends Activity {
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
      */
     private static final boolean AUTO_HIDE = true;
-    private ItemContent.ItemModel mItem;
+    private ItemEntity mItem;
 
     /**
      * If {@link #AUTO_HIDE} is set, the number of milliseconds to wait after
@@ -94,14 +95,16 @@ public class ShowQrActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mItem = ItemContent.ITEM_MAP.get(getIntent().getStringExtra("itemId"));
+        mItem = ItemContent.ITEM_MAP.get(String.valueOf(getIntent().getIntExtra("itemId", -1)));
+
+        // TODO: return to previous activity if -1
 
         setContentView(R.layout.activity_show_qr);
 
         mVisible = true;
         mControlsView = findViewById(R.id.fullscreen_content_controls);
         mContentView = findViewById(R.id.qrcodeImageView);
-        Picasso.get().load(Uri.parse(mItem.codeUrl)).into((ImageView) mContentView);
+        Picasso.get().load(Uri.parse(mItem.getCodeUrl())).into((ImageView) mContentView);
 
 
 
