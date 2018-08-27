@@ -9,5 +9,11 @@
     <color name="icons">#FFFFFF</color>
     <color name="divider">#BDBDBD</color>
 
+    <color name="widget_title_background">@color/primary</color>
+    <color name="widget_title_text">@android:color/white</color>
+    <color name="widget_background">@android:color/white</color>
+    <color name="widget_text">@color/primary_text</color>
+
+
     <color name="black_overlay">#66000000</color>
 </resources>
