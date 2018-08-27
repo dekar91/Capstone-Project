@@ -21,15 +21,14 @@
         <activity
             android:name=".ui.MainActivity"
             android:label="@string/title_activity_login"
-            android:theme="@style/AppTheme"
             android:launchMode="singleTop"
-            >
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-    </activity>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".ui.ItemListActivity"
             android:label="@string/title_item_list" />
@@ -41,6 +40,16 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ru.dekar.qr4all.ui.ItemListActivity" />
         </activity>
+
+        <receiver android:name="ru.dekar.AppWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/app_widget_info" />
+        </receiver>
     </application>
 
 </manifest>
