@@ -431,8 +431,7 @@ public class BarcodeCaptureActivity extends AppCompatActivity implements Barcode
 
         Intent intent = new Intent(activity, ItemDetailActivity.class);
         intent.putExtra(ItemDetailFragment.ARG_ITEM_ID, String.valueOf(barcode.rawValue));
-        Bundle transitionBundle = ActivityOptions.makeSceneTransitionAnimation(this).toBundle();
-        activity.startActivity(intent, transitionBundle);
+        activity.startActivity(intent);
 
     }
 }
