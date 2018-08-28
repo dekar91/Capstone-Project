@@ -8,5 +8,4 @@
         android:title="@string/showQrCode_ContentDescription"
         android:contentDescription="@string/showQrCode_ContentDescription"
         app:showAsAction="ifRoom"/>
-
 </menu>
