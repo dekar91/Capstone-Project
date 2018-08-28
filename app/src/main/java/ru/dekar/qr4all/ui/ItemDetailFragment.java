@@ -51,7 +51,6 @@ import ru.dekar.qr4all.services.UpdateItemService;
 public class ItemDetailFragment extends Fragment {
     @BindView(R.id.inputItemName)      EditText inputItemName;
     @BindView(R.id.inputItemDetails)   EditText inputItemDetails;
-    @BindView(R.id.showQrCode)         Button buttonShowQrCode;
     @BindView(R.id.itemId)             TextView itemIdView;
 
     private FirebaseAnalytics mFirebaseAnalytics;
@@ -145,21 +144,6 @@ public class ItemDetailFragment extends Fragment {
                     Picasso.get().load(Uri.parse(mItemEntity.getImageUrl())).into((ImageView) rootView.findViewById(R.id.itemPhoto));
 
                     act.setTitle(mItemEntity.getName());
-
-                    Button img = buttonShowQrCode;
-                    img.setOnClickListener(
-                            new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    Bundle bundle = new Bundle();
-                                    bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "click Scan");
-                                    mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-                                    Bundle transitionBundle = ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle();
-
-                                    startActivity((new Intent(getActivity(), ShowQrActivity.class)).putExtra(ItemDetailFragment.ARG_ITEM_ID, mItemEntity.getId()), transitionBundle);
-                                }
-                            });
-
 
                     // Update widget
                     UpdateItemService.startUpdateItemService(getContext(), mItemEntity);

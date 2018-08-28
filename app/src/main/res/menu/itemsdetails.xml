@@ -4,8 +4,9 @@
     <!-- "Mark Favorite", should appear as action button if possible -->
     <item
         android:id="@+id/action_tbShowQr"
-        android:icon="@drawable/ic_edit_black_24dp"
+        android:icon="@drawable/ic_eye_24dp"
         android:title="@string/showQrCode_ContentDescription"
+        android:contentDescription="@string/showQrCode_ContentDescription"
         app:showAsAction="ifRoom"/>
 
 </menu>
