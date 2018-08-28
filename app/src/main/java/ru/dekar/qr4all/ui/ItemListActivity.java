@@ -5,14 +5,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.app.Activity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import ru.dekar.qr4all.AppExecutors;
 import ru.dekar.qr4all.R;
-import ru.dekar.qr4all.models.ItemContent;
+import ru.dekar.qr4all.database.AppDatabase;
 import ru.dekar.qr4all.models.ItemEntity;
 
 import java.util.List;
@@ -33,11 +36,17 @@ public class ItemListActivity extends Activity {
      */
     private boolean mTwoPane;
 
+    public AppDatabase mDb;
+
+    public List<ItemEntity> mItemEntities;
+
+    public SimpleItemRecyclerViewAdapter mItemAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_list);
-
+        mDb = AppDatabase.getsInstance(this);
         if (findViewById(R.id.item_detail_container) != null) {
             // The detail container view will be present only in the
             // large-screen layouts (res/values-w900dp).
@@ -51,16 +60,56 @@ public class ItemListActivity extends Activity {
         setupRecyclerView((RecyclerView) recyclerView);
     }
 
+
+    public void retriveEntities()
+    {
+        final Activity act = this;
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                mItemEntities = mDb.itemDao().loadAllItems();
+                act.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mItemAdapter.setmValues(mItemEntities);
+                    }
+                });
+            }
+        });
+    }
+
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
-        ItemContent mItemContent = new ItemContent(this);
-        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(this, mItemContent.ITEMS, mTwoPane));
+        DividerItemDecoration decorator = new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL);
+        recyclerView.addItemDecoration(decorator);
+        mItemAdapter = new SimpleItemRecyclerViewAdapter(this, mTwoPane);
+        recyclerView.setAdapter(mItemAdapter);
+
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(final RecyclerView.ViewHolder viewHolder, int direction) {
+                AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        int position = viewHolder.getAdapterPosition();
+                        mDb.itemDao().deleteItem(mItemEntities.get(position));
+                        retriveEntities();
+                    }
+                });
+
+            }
+        }).attachToRecyclerView(recyclerView);
     }
 
     public static class SimpleItemRecyclerViewAdapter
             extends RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder> {
 
         private final ItemListActivity mParentActivity;
-        private final List<ItemEntity> mValues;
+        private  List<ItemEntity> mValues;
         private final boolean mTwoPane;
         private final View.OnClickListener mOnClickListener = new View.OnClickListener() {
             @Override
@@ -84,10 +133,15 @@ public class ItemListActivity extends Activity {
             }
         };
 
+        public void setmValues(List<ItemEntity> itemEntities)
+        {
+            mValues = itemEntities;
+            this.notifyDataSetChanged();
+
+        }
+
         SimpleItemRecyclerViewAdapter(ItemListActivity parent,
-                                      List<ItemEntity> items,
                                       boolean twoPane) {
-            mValues = items;
             mParentActivity = parent;
             mTwoPane = twoPane;
         }
@@ -101,7 +155,6 @@ public class ItemListActivity extends Activity {
 
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
-//            holder.mIdView.setText(mValues.get(position).getId());
             holder.mContentView.setText(mValues.get(position).getName());
 
             holder.itemView.setTag(mValues.get(position));
@@ -110,6 +163,9 @@ public class ItemListActivity extends Activity {
 
         @Override
         public int getItemCount() {
+            if(mValues == null)
+                return 0;
+
             return mValues.size();
         }
 
@@ -123,5 +179,11 @@ public class ItemListActivity extends Activity {
                 mContentView = (TextView) view.findViewById(R.id.content);
             }
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        retriveEntities();
     }
 }

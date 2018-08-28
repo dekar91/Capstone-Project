@@ -3,18 +3,25 @@ package ru.dekar.qr4all.ui;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.TextInputEditText;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.MultiAutoCompleteTextView;
 
 import com.squareup.picasso.Picasso;
 
+import ru.dekar.qr4all.AppExecutors;
 import ru.dekar.qr4all.R;
+import ru.dekar.qr4all.database.AppDatabase;
 import ru.dekar.qr4all.models.ItemContent;
 import ru.dekar.qr4all.models.ItemEntity;
+import ru.dekar.qr4all.services.UpdateItemService;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -96,16 +103,42 @@ public class ShowQrActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ItemContent mItemContent = new ItemContent(this);
-        mItem = mItemContent.ITEM_MAP.get(String.valueOf(getIntent().getIntExtra("itemId", -1)));
+        final int itemId  = getIntent().getIntExtra("itemId", -1);
 
         // TODO: return to previous activity if -1
-
         setContentView(R.layout.activity_show_qr);
 
         mVisible = true;
         mControlsView = findViewById(R.id.fullscreen_content_controls);
         mContentView = findViewById(R.id.qrcodeImageView);
-        Picasso.get().load(Uri.parse(mItem.getCodeUrl())).into((ImageView) mContentView);
+
+
+        final Activity act = this;
+
+
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                AppDatabase mDatabase = AppDatabase.getsInstance(act);
+
+                final ItemEntity mItem = mDatabase.itemDao().loadById(itemId);
+
+
+                if(mItem != null)
+                {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Picasso.get().load(Uri.parse(mItem.getCodeUrl())).into((ImageView) mContentView);
+
+                        }
+                    });
+                }
+            }
+
+        });
+
+
 
 
 
