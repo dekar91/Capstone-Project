@@ -9,10 +9,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignEnd="@+id/item_list"
-        android:layout_alignParentBottom="true"
+        android:layout_alignBottom="@+id/item_list"
         android:clickable="true"
         android:elevation="6dp"
         android:focusable="true"
+        android:layout_margin="@dimen/activity_horizontal_margin"
         android:src="@drawable/ic_camera_alt_black_24dp"
         app:rippleColor="@color/primary_dark" />
 
