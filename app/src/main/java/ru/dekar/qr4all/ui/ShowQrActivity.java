@@ -118,7 +118,7 @@ public class ShowQrActivity extends AppCompatActivity {
         activity = this;
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         ItemContent mItemContent = new ItemContent(this);
-        final int itemId  = getIntent().getIntExtra("itemId", -1);
+        final int itemId  = getIntent().getIntExtra(ItemDetailFragment.ARG_ITEM_ID, -1);
 
         // TODO: return to previous activity if -1
         setContentView(R.layout.activity_show_qr);

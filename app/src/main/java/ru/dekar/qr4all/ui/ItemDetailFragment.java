@@ -143,7 +143,7 @@ public class ItemDetailFragment extends Fragment {
                                     bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "click Scan");
                                     mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
-                                    startActivity((new Intent(getActivity(), ShowQrActivity.class)).putExtra("itemId", mItemEntity.getId()));
+                                    startActivity((new Intent(getActivity(), ShowQrActivity.class)).putExtra(ItemDetailFragment.ARG_ITEM_ID, mItemEntity.getId()));
                                 }
                             });
 
