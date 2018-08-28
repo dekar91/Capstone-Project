@@ -23,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.Toast;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -42,6 +43,9 @@ import ru.dekar.qr4all.services.UpdateItemService;
  * on handsets.
  */
 public class ItemDetailFragment extends Fragment {
+
+    private FirebaseAnalytics mFirebaseAnalytics;
+
     /**
      * The fragment argument representing the item ID that this fragment
      * represents.
@@ -73,6 +77,9 @@ public class ItemDetailFragment extends Fragment {
             itemId = Integer.parseInt(getArguments().getString(ARG_ITEM_ID));
         }
 
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(getActivity());
+
+
     }
 
     public void updateItem(View rootView) {
@@ -82,14 +89,14 @@ public class ItemDetailFragment extends Fragment {
             mItemEntity.setName(newName);
             mItemEntity.setDetails(newDetails);
 
-        AppExecutors.getInstance().diskIO().execute(new Runnable() {
-            @Override
-            public void run() {
-                AppDatabase mDatabase = AppDatabase.getsInstance(getContext());
+            AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                @Override
+                public void run() {
+                    AppDatabase mDatabase = AppDatabase.getsInstance(getContext());
 
-                mDatabase.itemDao().updateItem(mItemEntity);
-            }
-        });
+                    mDatabase.itemDao().updateItem(mItemEntity);
+                }
+            });
         }
     }
 
@@ -118,6 +125,10 @@ public class ItemDetailFragment extends Fragment {
                             new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "click Scan");
+                                    mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                                     startActivity((new Intent(getActivity(), ShowQrActivity.class)).putExtra("itemId", mItemEntity.getId()));
                                 }
                             });
@@ -125,7 +136,7 @@ public class ItemDetailFragment extends Fragment {
 
                     // Update widget
                     UpdateItemService.startUpdateItemService(getContext(), mItemEntity);
-                } else  {
+                } else {
                     Toast toast = Toast.makeText(getActivity(), R.string.barcode_failure, Toast.LENGTH_SHORT);
                     toast.show();
                     Intent intent = new Intent(getActivity(), ItemListActivity.class);

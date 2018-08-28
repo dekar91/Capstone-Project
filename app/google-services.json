@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "839077348123",
+    "firebase_url": "https://udacity-capstone-project-68857.firebaseio.com",
+    "project_id": "udacity-capstone-project-68857",
+    "storage_bucket": "udacity-capstone-project-68857.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:839077348123:android:698322661df77813",
+        "android_client_info": {
+          "package_name": "ru.dekar.qr4all"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "839077348123-0kc23r7i3odjk1hofop330ccq11dpf0p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZwUdrec9nCe2bswuABjiY120lZIvNqQk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

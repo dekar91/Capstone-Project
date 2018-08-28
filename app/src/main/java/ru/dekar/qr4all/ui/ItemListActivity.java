@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.vision.barcode.Barcode;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.List;
 
@@ -41,6 +42,8 @@ import ru.dekar.qr4all.parcode.BarcodeCaptureActivity;
  * item details side-by-side using two vertical panes.
  */
 public class ItemListActivity extends AppCompatActivity{
+
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
@@ -67,6 +70,9 @@ public class ItemListActivity extends AppCompatActivity{
             // If this view is present, then the
             // activity should be in two-pane mode.
             mTwoPane = true;
+
+            mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+
         }
 
         View recyclerView = findViewById(R.id.item_list);

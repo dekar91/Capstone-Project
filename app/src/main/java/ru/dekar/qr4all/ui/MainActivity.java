@@ -33,6 +33,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,6 +51,8 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<C
      * Id to identity READ_CONTACTS permission request.
      */
     private static final int REQUEST_READ_CONTACTS = 0;
+
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     /**
      * A dummy authentication store containing known user names and passwords.
@@ -75,6 +79,8 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<C
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
+
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -146,6 +152,9 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<C
      */
     private void attemptLogin() {
 
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "testLogin");
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.LOGIN, bundle);
         startActivity(new Intent(this, ItemListActivity.class));
 
 

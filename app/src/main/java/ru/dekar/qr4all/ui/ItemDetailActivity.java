@@ -7,6 +7,8 @@ import android.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+
 import ru.dekar.qr4all.R;
 
 /**
@@ -17,8 +19,11 @@ import ru.dekar.qr4all.R;
  */
 public class ItemDetailActivity extends AppCompatActivity {
 
+    private FirebaseAnalytics mFirebaseAnalytics;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_detail);
 
@@ -27,6 +32,9 @@ public class ItemDetailActivity extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+
 
         // savedInstanceState is non-null when there is fragment state
         // saved from previous configurations of this activity

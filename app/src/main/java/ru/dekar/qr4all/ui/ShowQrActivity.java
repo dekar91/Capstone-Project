@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.MultiAutoCompleteTextView;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.squareup.picasso.Picasso;
 
 import ru.dekar.qr4all.AppExecutors;
@@ -32,6 +33,8 @@ import ru.dekar.qr4all.services.UpdateItemService;
  * status bar and navigation/system bar) with user interaction.
  */
 public class ShowQrActivity extends AppCompatActivity {
+    private FirebaseAnalytics mFirebaseAnalytics;
+
     /**
      * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
@@ -106,6 +109,7 @@ public class ShowQrActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         ItemContent mItemContent = new ItemContent(this);
         final int itemId  = getIntent().getIntExtra("itemId", -1);
 
