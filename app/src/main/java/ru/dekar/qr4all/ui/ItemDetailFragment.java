@@ -1,9 +1,12 @@
 package ru.dekar.qr4all.ui;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.design.widget.TextInputEditText;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,8 +17,13 @@ import android.widget.ImageView;
 import android.widget.MultiAutoCompleteTextView;
 
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.PicassoProvider;
 
+import java.util.List;
+
+import ru.dekar.qr4all.AppExecutors;
 import ru.dekar.qr4all.R;
+import ru.dekar.qr4all.database.AppDatabase;
 import ru.dekar.qr4all.models.ItemContent;
 import ru.dekar.qr4all.models.ItemEntity;
 import ru.dekar.qr4all.services.UpdateItemService;
@@ -36,7 +44,8 @@ public class ItemDetailFragment extends Fragment {
     /**
      * The dummy content this fragment is presenting.
      */
-    private ItemEntity mItem;
+    private int itemId;
+
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -49,13 +58,60 @@ public class ItemDetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
+
         if (getArguments().containsKey(ARG_ITEM_ID)) {
-            // Load the dummy content specified by the fragment
-            // arguments. In a real-world scenario, use a Loader
-            // to load content from a content provider.
-            ItemContent mItemContent = new ItemContent(this.getContext());
-            mItem = mItemContent.ITEM_MAP.get(getArguments().getString(ARG_ITEM_ID));
+            itemId =  Integer.parseInt(getArguments().getString(ARG_ITEM_ID));
         }
+    }
+
+    public static void setItemPhoto(View rootView, Uri imageUrl)
+    {
+        Picasso.get().load(imageUrl).into((ImageView) rootView.findViewById(R.id.itemPhoto));
+    }
+
+    public void updateUi(final View rootView, final int itemId)
+    {
+        final Activity act = getActivity();
+
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                AppDatabase mDatabase = AppDatabase.getsInstance(getContext());
+
+                 final ItemEntity mItem = mDatabase.itemDao().loadById(itemId);
+
+
+                if(mItem != null)
+                {
+                    ((MultiAutoCompleteTextView) rootView.findViewById(R.id.item_description)).setText(mItem.getDetails());
+                    ((TextInputEditText) rootView.findViewById(R.id.itemName)).setText(mItem.getName());
+
+                    act.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Picasso.get().load(Uri.parse(mItem.getImageUrl())).into((ImageView) rootView.findViewById(R.id.itemPhoto));
+
+                        }
+                    });
+
+                    Button img = rootView.findViewById(R.id.showQrCode);
+                    img.setOnClickListener(
+                            new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    startActivity((new Intent(getActivity(), ShowQrActivity.class)).putExtra("itemId", mItem.getId()));
+                                }
+                            });
+
+
+                    // Update widget
+                    UpdateItemService.startUpdateItemService(getContext(), mItem);
+                }
+                }
+
+            });
+
     }
 
     @Override
@@ -64,27 +120,7 @@ public class ItemDetailFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.item_detail, container, false);
 
-
-        // Show the dummy content as text in a TextView.
-        if (mItem != null) {
-            ((MultiAutoCompleteTextView) rootView.findViewById(R.id.item_description)).setText(mItem.getDetails());
-            ((TextInputEditText) rootView.findViewById(R.id.itemName)).setText(mItem.getName());
-            Picasso.get().load(Uri.parse(mItem.getImageUrl())).into((ImageView) rootView.findViewById(R.id.itemPhoto));
-//            ((ImageView) rootView.findViewById(R.id.co)).setImageURI(mUri);
-
-             Button img = rootView.findViewById(R.id.showQrCode);
-            img.setOnClickListener(
-                    new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Log.v("text","text click");
-                            startActivity((new Intent(getActivity(), ShowQrActivity.class)).putExtra("itemId", mItem.getId()));
-                        }
-                    });
-        }
-
-        // Update widget
-        UpdateItemService.startUpdateItemService(getContext(), mItem);
+        updateUi(rootView, itemId);
 
         return rootView;
     }

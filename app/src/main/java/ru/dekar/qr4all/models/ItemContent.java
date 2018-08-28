@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import ru.dekar.qr4all.AppExecutors;
 import ru.dekar.qr4all.database.AppDatabase;
 import ru.dekar.qr4all.database.ItemDao;
 
@@ -30,16 +31,31 @@ public class ItemContent {
     {
         mDatabase = AppDatabase.getsInstance(context);
 
-       if (mDatabase.itemDao().loadAllItems().size() == 0)
-                for (int i = 1; i <= COUNT; i++) {
-                ItemEntity mEntry = createDummyItem(i);
-                mDatabase.itemDao().insertItem(mEntry);
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                if (mDatabase.itemDao().loadAllItems().size() == 0)
+                    for (int i = 1; i <= COUNT; i++) {
+                        ItemEntity mEntry = createDummyItem(i);
+                        mDatabase.itemDao().insertItem(mEntry);
+
+                    }
+            }
+        });
+
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+              List<ItemEntity> listEntities = mDatabase.itemDao().loadAllItems();
+
+                for (int i=0; i <  listEntities.size(); i++)
+                    addItem(listEntities.get(i));
+
 
             }
+        });
 
-            List<ItemEntity> listEntities = mDatabase.itemDao().loadAllItems();
-        for (int i=0; i <  listEntities.size(); i++)
-            addItem(listEntities.get(i));
+
     }
 
     /**
@@ -49,10 +65,6 @@ public class ItemContent {
 
     private static final int COUNT = 25;
 
-    static {
-
-
-    }
 
     private void addItem(ItemEntity item) {
         ITEMS.add(item);

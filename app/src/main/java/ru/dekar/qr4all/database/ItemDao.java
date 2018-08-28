@@ -16,6 +16,9 @@ public interface ItemDao {
     @Query("SELECT * FROM item ORDER BY updated_at")
     List<ItemEntity> loadAllItems();
 
+    @Query("SELECT * FROM item WHERE id = :id ORDER BY updated_at")
+    ItemEntity loadById(int id);
+
     @Insert
     void insertItem(ItemEntity itemEntity);
 
