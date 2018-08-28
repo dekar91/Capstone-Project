@@ -13,6 +13,8 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
+import android.transition.Fade;
+import android.transition.Slide;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -117,6 +119,10 @@ public class ShowQrActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setEnterTransition(new Slide());
+        getWindow().setExitTransition(new Fade());
+
+
         activity = this;
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         ItemContent mItemContent = new ItemContent(this);
