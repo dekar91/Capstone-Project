@@ -32,6 +32,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 
@@ -155,6 +156,10 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<C
         Bundle bundle = new Bundle();
         bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "testLogin");
         mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.LOGIN, bundle);
+
+        Toast toast = Toast.makeText(this, "Authrozation has not implemented yet, sorry", Toast.LENGTH_SHORT);
+        toast.show();
+
         startActivity(new Intent(this, ItemListActivity.class));
 
 
