@@ -1,6 +1,7 @@
 package ru.dekar.qr4all.ui;
 
 import android.app.ActionBar;
+import android.app.ActivityOptions;
 import android.app.Fragment;
 import android.app.ListActivity;
 import android.arch.lifecycle.LiveData;
@@ -90,7 +91,9 @@ public class ItemDetailFragment extends Fragment {
                 Toast toast = Toast.makeText(getActivity(), R.string.barcode_failure, Toast.LENGTH_SHORT);
                 toast.show();
                 Intent intent = new Intent(getActivity(), ItemListActivity.class);
-                getContext().startActivity(intent);
+                Bundle transitionBundle = ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle();
+
+                getContext().startActivity(intent, transitionBundle);
 
                 return;
             }
@@ -150,8 +153,9 @@ public class ItemDetailFragment extends Fragment {
                                     Bundle bundle = new Bundle();
                                     bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "click Scan");
                                     mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+                                    Bundle transitionBundle = ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle();
 
-                                    startActivity((new Intent(getActivity(), ShowQrActivity.class)).putExtra(ItemDetailFragment.ARG_ITEM_ID, mItemEntity.getId()));
+                                    startActivity((new Intent(getActivity(), ShowQrActivity.class)).putExtra(ItemDetailFragment.ARG_ITEM_ID, mItemEntity.getId()), transitionBundle);
                                 }
                             });
 

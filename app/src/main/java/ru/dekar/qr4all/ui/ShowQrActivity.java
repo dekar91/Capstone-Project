@@ -3,6 +3,7 @@ package ru.dekar.qr4all.ui;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.content.Intent;
@@ -105,7 +106,8 @@ public class ShowQrActivity extends AppCompatActivity {
 
             Intent intent = new Intent(activity, ItemDetailActivity.class);
             intent.putExtra(ItemDetailFragment.ARG_ITEM_ID, String.valueOf(mItem.getId()));
-            activity.startActivity(intent);
+            Bundle transitionBundle = ActivityOptions.makeSceneTransitionAnimation(activity).toBundle();
+            activity.startActivity(intent, transitionBundle);
             return false;
         }
     };

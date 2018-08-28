@@ -1,6 +1,7 @@
 package ru.dekar.qr4all.ui;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
@@ -174,8 +175,9 @@ public class ItemListActivity extends AppCompatActivity{
                     Context context = view.getContext();
                     Intent intent = new Intent(context, ItemDetailActivity.class);
                     intent.putExtra(ItemDetailFragment.ARG_ITEM_ID, String.valueOf(item.getId()));
+                    Bundle transitionBundle = ActivityOptions.makeSceneTransitionAnimation(mParentActivity).toBundle();
 
-                    context.startActivity(intent);
+                    context.startActivity(intent, transitionBundle);
                 }
             }
         };

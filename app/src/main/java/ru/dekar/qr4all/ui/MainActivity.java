@@ -165,8 +165,8 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<C
         Toast toast = Toast.makeText(this, "Authrozation has not implemented yet, sorry", Toast.LENGTH_SHORT);
         toast.show();
 
-        Bundle bundleA = ActivityOptions.makeSceneTransitionAnimation(this).toBundle();
-        startActivity(new Intent(this, ItemListActivity.class), bundleA);
+        Bundle transitionBundle = ActivityOptions.makeSceneTransitionAnimation(this).toBundle();
+        startActivity(new Intent(this, ItemListActivity.class), transitionBundle);
 
 
         if (mAuthTask != null) {

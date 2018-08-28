@@ -18,6 +18,7 @@ package ru.dekar.qr4all.parcode;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -430,7 +431,8 @@ public class BarcodeCaptureActivity extends AppCompatActivity implements Barcode
 
         Intent intent = new Intent(activity, ItemDetailActivity.class);
         intent.putExtra(ItemDetailFragment.ARG_ITEM_ID, String.valueOf(barcode.rawValue));
-        activity.startActivity(intent);
+        Bundle transitionBundle = ActivityOptions.makeSceneTransitionAnimation(this).toBundle();
+        activity.startActivity(intent, transitionBundle);
 
     }
 }
