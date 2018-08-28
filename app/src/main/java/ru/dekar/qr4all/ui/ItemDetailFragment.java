@@ -30,6 +30,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import ru.dekar.qr4all.AppExecutors;
 import ru.dekar.qr4all.R;
 import ru.dekar.qr4all.database.AppDatabase;
@@ -45,6 +47,9 @@ import ru.dekar.qr4all.services.UpdateItemService;
  * on handsets.
  */
 public class ItemDetailFragment extends Fragment {
+    @BindView(R.id.inputItemName) EditText inputItemName;
+    @BindView(R.id.inputItemDetails) EditText inputItemDetails;
+    @BindView(R.id.showQrCode) Button buttonShowQrCode;
 
     private FirebaseAnalytics mFirebaseAnalytics;
 
@@ -96,8 +101,8 @@ public class ItemDetailFragment extends Fragment {
     }
 
     public void updateItem(View rootView) {
-        String newName = ((EditText) (rootView.findViewById(R.id.inputItemName))).getText().toString();
-        String newDetails = ((EditText) (rootView.findViewById(R.id.inputItemDetails))).getText().toString();
+        String newName = inputItemName.getText().toString();
+        String newDetails = inputItemDetails.getText().toString();
         if (mItemEntity != null && (mItemEntity.getName().equals(newName) || mItemEntity.getDetails().equals(newDetails))) {
             mItemEntity.setName(newName);
             mItemEntity.setDetails(newDetails);
@@ -127,14 +132,14 @@ public class ItemDetailFragment extends Fragment {
                 if (itemEntity != null) {
                     mItemEntity = itemEntity;
 
-                    ((MultiAutoCompleteTextView) rootView.findViewById(R.id.inputItemDetails)).setText(mItemEntity.getDetails());
-                    ((TextInputEditText) rootView.findViewById(R.id.inputItemName)).setText(mItemEntity.getName());
+                    inputItemName.setText(mItemEntity.getDetails());
+                    inputItemDetails.setText(mItemEntity.getName());
 
                     Picasso.get().load(Uri.parse(mItemEntity.getImageUrl())).into((ImageView) rootView.findViewById(R.id.itemPhoto));
 
                     act.setTitle(mItemEntity.getName());
 
-                    Button img = rootView.findViewById(R.id.showQrCode);
+                    Button img = buttonShowQrCode;
                     img.setOnClickListener(
                             new View.OnClickListener() {
                                 @Override
@@ -189,6 +194,8 @@ public class ItemDetailFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         rootView = inflater.inflate(R.layout.item_detail, container, false);
+        ButterKnife.bind(this, rootView);
+
         updateUi(rootView, itemId);
 
         return rootView;
