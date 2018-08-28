@@ -8,11 +8,14 @@ import android.app.Fragment;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.design.widget.TextInputEditText;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.MultiAutoCompleteTextView;
 
@@ -46,6 +49,8 @@ public class ItemDetailFragment extends Fragment {
      */
     private int itemId;
 
+    public ItemEntity mItemEntity;
+
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -63,11 +68,22 @@ public class ItemDetailFragment extends Fragment {
         if (getArguments().containsKey(ARG_ITEM_ID)) {
             itemId =  Integer.parseInt(getArguments().getString(ARG_ITEM_ID));
         }
+
     }
 
-    public static void setItemPhoto(View rootView, Uri imageUrl)
+    public void updateItem(View rootView)
     {
-        Picasso.get().load(imageUrl).into((ImageView) rootView.findViewById(R.id.itemPhoto));
+        mItemEntity.setName( ((EditText) rootView.findViewById(R.id.inputItemName)).getText().toString());
+        mItemEntity.setDetails( ((EditText) rootView.findViewById(R.id.inputItemDetails)).getText().toString());
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                AppDatabase mDatabase = AppDatabase.getsInstance(getContext());
+
+                mDatabase.itemDao().updateItem(mItemEntity);
+            }
+        });
+
     }
 
     public void updateUi(final View rootView, final int itemId)
@@ -84,8 +100,10 @@ public class ItemDetailFragment extends Fragment {
 
                 if(mItem != null)
                 {
-                    ((MultiAutoCompleteTextView) rootView.findViewById(R.id.item_description)).setText(mItem.getDetails());
-                    ((TextInputEditText) rootView.findViewById(R.id.itemName)).setText(mItem.getName());
+                    mItemEntity = mItem;
+
+                    ((MultiAutoCompleteTextView) rootView.findViewById(R.id.inputItemDetails)).setText(mItem.getDetails());
+                    ((TextInputEditText) rootView.findViewById(R.id.inputItemName)).setText(mItem.getName());
 
                     act.runOnUiThread(new Runnable() {
                         @Override
@@ -118,7 +136,48 @@ public class ItemDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.item_detail, container, false);
+        final View rootView = inflater.inflate(R.layout.item_detail, container, false);
+
+        EditText eName = (EditText) rootView.findViewById(R.id.inputItemName);
+        EditText eDetails = (EditText)  rootView.findViewById(R.id.inputItemDetails);
+
+        eName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                updateItem(rootView);
+
+            }
+        });
+
+
+        eDetails.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                updateItem(rootView);
+
+            }
+        });
+
 
         updateUi(rootView, itemId);
 
