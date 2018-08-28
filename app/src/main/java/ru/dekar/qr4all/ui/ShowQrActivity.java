@@ -104,7 +104,7 @@ public class ShowQrActivity extends AppCompatActivity {
             }
 
             Intent intent = new Intent(activity, ItemDetailActivity.class);
-            intent.putExtra("itemId", mItem.getId());
+            intent.putExtra(ItemDetailFragment.ARG_ITEM_ID, String.valueOf(mItem.getId()));
             activity.startActivity(intent);
             return false;
         }

@@ -1,5 +1,6 @@
 package ru.dekar.qr4all.ui;
 
+import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.ListActivity;
 import android.arch.lifecycle.LiveData;
@@ -14,6 +15,7 @@ import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,6 +76,17 @@ public class ItemDetailFragment extends Fragment {
 
 
         if (getArguments().containsKey(ARG_ITEM_ID)) {
+            String arg = getArguments().getString(ARG_ITEM_ID);
+
+            if(arg == null)
+            {
+                Toast toast = Toast.makeText(getActivity(), R.string.barcode_failure, Toast.LENGTH_SHORT);
+                toast.show();
+                Intent intent = new Intent(getActivity(), ItemListActivity.class);
+                getContext().startActivity(intent);
+
+                return;
+            }
             itemId = Integer.parseInt(getArguments().getString(ARG_ITEM_ID));
         }
 
@@ -119,6 +132,7 @@ public class ItemDetailFragment extends Fragment {
 
                     Picasso.get().load(Uri.parse(mItemEntity.getImageUrl())).into((ImageView) rootView.findViewById(R.id.itemPhoto));
 
+                    act.setTitle(mItemEntity.getName());
 
                     Button img = rootView.findViewById(R.id.showQrCode);
                     img.setOnClickListener(
