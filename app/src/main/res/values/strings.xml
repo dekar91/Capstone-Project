@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name" translatable="false">Qr4all</string>
     <string name="server_url"  translatable="false">http://qr4all.ru/</string>
+    <string name="itemId">ID:</string>
 
     <string name="title_activity_show_qr">Show QR Code</string>
     <string name="dummy_button">Close window</string>
@@ -34,6 +35,7 @@
     <string name="inputItemName_ContentDescription">Item name</string>
     <string name="inputItemDescrption_ContentDescription">Item details</string>
     <string name="showQrCode_ContentDescription">Show QrCode</string>
+    <string name="itemIdContentDescription">item ID</string>
     <string name="low_storage_error">Face detector dependencies cannot be downloaded due to low device storage</string>
     <string name="ok">OK</string>
     <string name="permission_camera_rationale">Access to the camera is needed for detection</string>

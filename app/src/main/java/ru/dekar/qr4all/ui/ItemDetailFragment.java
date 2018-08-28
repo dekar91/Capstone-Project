@@ -23,6 +23,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.MultiAutoCompleteTextView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
@@ -47,9 +48,10 @@ import ru.dekar.qr4all.services.UpdateItemService;
  * on handsets.
  */
 public class ItemDetailFragment extends Fragment {
-    @BindView(R.id.inputItemName) EditText inputItemName;
-    @BindView(R.id.inputItemDetails) EditText inputItemDetails;
-    @BindView(R.id.showQrCode) Button buttonShowQrCode;
+    @BindView(R.id.inputItemName)      EditText inputItemName;
+    @BindView(R.id.inputItemDetails)   EditText inputItemDetails;
+    @BindView(R.id.showQrCode)         Button buttonShowQrCode;
+    @BindView(R.id.itemId)             TextView itemIdView;
 
     private FirebaseAnalytics mFirebaseAnalytics;
 
@@ -134,6 +136,7 @@ public class ItemDetailFragment extends Fragment {
 
                     inputItemName.setText(mItemEntity.getDetails());
                     inputItemDetails.setText(mItemEntity.getName());
+                    itemIdView.setText(String.valueOf(mItemEntity.getId()));
 
                     Picasso.get().load(Uri.parse(mItemEntity.getImageUrl())).into((ImageView) rootView.findViewById(R.id.itemPhoto));
 
