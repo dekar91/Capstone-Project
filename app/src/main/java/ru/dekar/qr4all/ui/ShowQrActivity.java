@@ -3,10 +3,13 @@ package ru.dekar.qr4all.ui;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.Observer;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
@@ -116,32 +119,17 @@ public class ShowQrActivity extends AppCompatActivity {
 
         final Activity act = this;
 
+        AppDatabase mDatabase = AppDatabase.getsInstance(act);
 
-        AppExecutors.getInstance().diskIO().execute(new Runnable() {
-            @Override
-            public void run() {
-                AppDatabase mDatabase = AppDatabase.getsInstance(act);
+         LiveData<ItemEntity> itemLive = mDatabase.itemDao().loadById(itemId);
+         itemLive.observe(this, new Observer<ItemEntity>() {
+             @Override
+             public void onChanged(@Nullable ItemEntity itemEntity) {
+                 mItem = itemEntity;
+                 Picasso.get().load(Uri.parse(mItem.getCodeUrl())).into((ImageView) mContentView);
 
-                final ItemEntity mItem = mDatabase.itemDao().loadById(itemId).getValue();
-
-
-                if(mItem != null)
-                {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Picasso.get().load(Uri.parse(mItem.getCodeUrl())).into((ImageView) mContentView);
-
-                        }
-                    });
-                }
-            }
-
-        });
-
-
-
-
+             }
+         });
 
         // Set up the user interaction to manually show or hide the system UI.
         mContentView.setOnClickListener(new View.OnClickListener() {
