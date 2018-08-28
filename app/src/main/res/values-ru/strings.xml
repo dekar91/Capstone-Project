@@ -1,0 +1,41 @@
+<resources>
+    <string name="title_activity_show_qr">Просмотр QR кода</string>
+    <string name="dummy_button">ЗАкрыть окно</string>
+    <string name="title_activity_login">Войти</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Пароль</string>
+    <string name="action_sign_in">Войти или зарегистрироваться</string>
+    <string name="action_sign_in_short">Войти</string>
+    <string name="error_invalid_email">Неверный email </string>
+    <string name="error_invalid_password">Пароль слишком короткий</string>
+    <string name="error_incorrect_password">Неверный пароль</string>
+    <string name="error_field_required">Необходимо заполнить это поле</string>
+    <string name="permission_rationale">Для автоматического заполнения адреса необходимо разрешить доступ</string>
+    <string name="title_item_list">Элементы</string>
+    <string name="title_item_detail">Просмотр элемента</string>
+    <string name="appwidget_text">Пример</string>
+    <string name="add_widget">Добавить виджет</string>
+
+    <string name="widget_empty_title">Элемент не выбран</string>
+    <string name="widget_empty_details">Пожалуйста выберите элемент чтобы увидеть информацию о нём.</string>
+
+
+    <string name="login_ContentDescription">Логин</string>
+    <string name="itemPhoto_ContentDescription">Фото элемента</string>
+    <string name="password_ContentDescription">Пароль</string>
+    <string name="item_ContentDescription">Элемент</string>
+    <string name="inputItemName_ContentDescription">Название элемента</string>
+    <string name="inputItemDescrption_ContentDescription">Описание</string>
+    <string name="showQrCode_ContentDescription">Показать QrCode</string>
+    <string name="low_storage_error">Ошибка распознания лиц</string>
+    <string name="ok">OK</string>
+    <string name="permission_camera_rationale">Для определения кода необходимо предоставить доступ к камере</string>
+    <string name="no_camera_permission">Необходимо предоставить доступ к камере</string>
+    <string name="read_barcode">Распознать баркод</string>
+    <string name="barcode_success">РАспознано</string>
+    <string name="barcode_failure">БАркод не найден</string>
+    <string name="barcode_error">"Ошибка чтения кода: %1$s"</string>
+
+</resources>
