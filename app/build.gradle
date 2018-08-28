@@ -30,7 +30,7 @@ android {
             keyAlias 'dekar'
             keyPassword '1355481'
             storePassword '1355481'
-            storeFile file('./keystore.jks')
+            storeFile file('../keystore.jks')
         }
     }
     compileSdkVersion 27
