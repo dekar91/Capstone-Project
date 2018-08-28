@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.transition.Explode;
+import android.transition.Slide;
+import android.view.Gravity;
 import android.view.MenuItem;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
@@ -23,10 +26,15 @@ public class ItemDetailActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
+
+        Slide slide = new Slide(Gravity.BOTTOM);
+        slide.addTarget(R.id.itemId);
+        getWindow().setEnterTransition(slide);
+
         setContentView(R.layout.activity_item_detail);
 
+        getWindow().setExitTransition(new Explode());
         // Show the Up button in the action bar.
         ActionBar actionBar = getActionBar();
         if (actionBar != null) {

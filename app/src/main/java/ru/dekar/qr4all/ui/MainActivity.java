@@ -3,6 +3,7 @@ package ru.dekar.qr4all.ui;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.ActivityOptions;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -23,6 +24,8 @@ import android.provider.ContactsContract;
 import android.support.v4.app.ShareCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.transition.Explode;
+import android.transition.Fade;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -77,6 +80,9 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<C
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity__main);
+        getWindow().setExitTransition(new Explode());
+        getWindow().setEnterTransition(new Explode());
+
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
@@ -145,7 +151,6 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<C
         }
     }
 
-
     /**
      * Attempts to sign in or register the account specified by the login form.
      * If there are form errors (invalid email, missing fields, etc.), the
@@ -160,7 +165,8 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<C
         Toast toast = Toast.makeText(this, "Authrozation has not implemented yet, sorry", Toast.LENGTH_SHORT);
         toast.show();
 
-        startActivity(new Intent(this, ItemListActivity.class));
+        Bundle bundleA = ActivityOptions.makeSceneTransitionAnimation(this).toBundle();
+        startActivity(new Intent(this, ItemListActivity.class), bundleA);
 
 
         if (mAuthTask != null) {
