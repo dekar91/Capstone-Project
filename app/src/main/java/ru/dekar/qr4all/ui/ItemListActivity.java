@@ -123,10 +123,18 @@ public class ItemListActivity extends AppCompatActivity{
             public void onChanged(@Nullable List<ItemEntity> itemEntities) {
 
                 if (itemEntities.size() == 0)
-                    for (int i = 1; i <= 25; i++) {
-                        ItemEntity mEntry = ItemContent.createDummyItem(i);
-                        mDb.itemDao().insertItem(mEntry);
-                    }
+                {
+                    AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            for (int i = 1; i <= 25; i++) {
+                                ItemEntity mEntry = ItemContent.createDummyItem(i);
+                                mDb.itemDao().insertItem(mEntry);
+                            };
+                        }
+                    });
+                }
+
 
                 mItemEntities = itemEntities;
                 mItemAdapter.setmValues(mItemEntities);

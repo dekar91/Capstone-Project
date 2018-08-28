@@ -1,6 +1,7 @@
 package ru.dekar.qr4all.ui;
 
 import android.app.Fragment;
+import android.app.ListActivity;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModel;
@@ -20,8 +21,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.MultiAutoCompleteTextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
+
+import java.util.List;
 
 import ru.dekar.qr4all.AppExecutors;
 import ru.dekar.qr4all.R;
@@ -121,6 +125,11 @@ public class ItemDetailFragment extends Fragment {
 
                     // Update widget
                     UpdateItemService.startUpdateItemService(getContext(), mItemEntity);
+                } else  {
+                    Toast toast = Toast.makeText(getActivity(), R.string.barcode_failure, Toast.LENGTH_SHORT);
+                    toast.show();
+                    Intent intent = new Intent(getActivity(), ItemListActivity.class);
+                    getContext().startActivity(intent);
                 }
             }
 

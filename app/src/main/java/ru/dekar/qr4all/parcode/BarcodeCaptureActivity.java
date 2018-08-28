@@ -50,13 +50,15 @@ import ru.dekar.qr4all.R;
 import ru.dekar.qr4all.parcode.ui.camera.CameraSource;
 import ru.dekar.qr4all.parcode.ui.camera.CameraSourcePreview;
 import ru.dekar.qr4all.parcode.ui.camera.GraphicOverlay;
+import ru.dekar.qr4all.ui.ItemDetailActivity;
+import ru.dekar.qr4all.ui.ItemDetailFragment;
 
 /**
  * Activity for the multi-tracker app.  This app detects barcodes and displays the value with the
  * rear facing camera. During detection overlay graphics are drawn to indicate the position,
  * size, and ID of each barcode.
  */
-public final class BarcodeCaptureActivity extends AppCompatActivity implements BarcodeGraphicTracker.BarcodeUpdateListener {
+public class BarcodeCaptureActivity extends AppCompatActivity implements BarcodeGraphicTracker.BarcodeUpdateListener {
     private static final String TAG = "Barcode-reader";
 
     // intent request code to handle updating play services if needed.
@@ -78,6 +80,7 @@ public final class BarcodeCaptureActivity extends AppCompatActivity implements B
     private ScaleGestureDetector scaleGestureDetector;
     private GestureDetector gestureDetector;
 
+    private Activity activity;
     /**
      * Initializes the UI and creates the detector pipeline.
      */
@@ -85,6 +88,8 @@ public final class BarcodeCaptureActivity extends AppCompatActivity implements B
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         setContentView(R.layout.barcode_capture);
+
+        activity = this;
 
         mPreview = (CameraSourcePreview) findViewById(R.id.preview);
         mGraphicOverlay = (GraphicOverlay<BarcodeGraphic>) findViewById(R.id.graphicOverlay);
@@ -422,6 +427,10 @@ public final class BarcodeCaptureActivity extends AppCompatActivity implements B
 
     @Override
     public void onBarcodeDetected(Barcode barcode) {
-        //do something with barcode data returned
+
+        Intent intent = new Intent(activity, ItemDetailActivity.class);
+        intent.putExtra(ItemDetailFragment.ARG_ITEM_ID, String.valueOf(barcode.rawValue));
+        activity.startActivity(intent);
+
     }
 }
