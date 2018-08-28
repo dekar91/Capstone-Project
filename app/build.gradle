@@ -72,6 +72,7 @@ dependencies {
     implementation 'com.google.maps.android:android-maps-utils:0.5'
 
     implementation 'com.jakewharton:butterknife:8.8.1'
+    implementation 'com.android.support:appcompat-v7:27.1.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 
     implementation 'com.google.firebase:firebase-ml-vision:17.0.0'

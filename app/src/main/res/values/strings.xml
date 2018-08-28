@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name" translatable="false">Qr4all</string>
-    <string name="server_url"  translatable="false">http://qr4all.ru/</string>
+    <string name="server_url" translatable="false">http://qr4all.ru/</string>
     <string name="itemId">ID:</string>
 
     <string name="title_activity_show_qr">Show QR Code</string>
@@ -44,5 +44,6 @@
     <string name="barcode_success">Barcode read successfully</string>
     <string name="barcode_failure">No barcode captured</string>
     <string name="barcode_error">"Error reading barcode: %1$s"</string>
+    <string name="title_activity_maps">Map</string>
 
 </resources>
