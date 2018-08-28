@@ -30,6 +30,8 @@
     <string name="inputItemDescrption_ContentDescription">Описание</string>
     <string name="showQrCode_ContentDescription">Показать QrCode</string>
     <string name="low_storage_error">Ошибка распознания лиц</string>
+    <string name="itemIdContentDescription">item ID</string>
+
     <string name="ok">OK</string>
     <string name="permission_camera_rationale">Для определения кода необходимо предоставить доступ к камере</string>
     <string name="no_camera_permission">Необходимо предоставить доступ к камере</string>
