@@ -1,8 +1,7 @@
 package ru.dekar.qr4all.ui;
 
-import android.app.Activity;
-import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,6 +21,7 @@ import java.util.List;
 import ru.dekar.qr4all.AppExecutors;
 import ru.dekar.qr4all.R;
 import ru.dekar.qr4all.database.AppDatabase;
+import ru.dekar.qr4all.database.ItemViewModel;
 import ru.dekar.qr4all.models.ItemContent;
 import ru.dekar.qr4all.models.ItemEntity;
 
@@ -66,9 +66,9 @@ public class ItemListActivity extends AppCompatActivity {
     }
 
 
-    public void retriveEntities() {
-        final LiveData<List<ItemEntity>> listEntities = mDb.itemDao().loadAllItems();
-        listEntities.observe(this, new Observer<List<ItemEntity>>() {
+    public void setViewModel() {
+        ItemViewModel viewModel = ViewModelProviders.of(this).get(ItemViewModel.class);
+        viewModel.getItems().observe(this, new Observer<List<ItemEntity>>() {
             @Override
             public void onChanged(@Nullable List<ItemEntity> itemEntities) {
 
@@ -105,7 +105,6 @@ public class ItemListActivity extends AppCompatActivity {
                     public void run() {
                         int position = viewHolder.getAdapterPosition();
                         mDb.itemDao().deleteItem(mItemEntities.get(position));
-                        retriveEntities();
                     }
                 });
 
@@ -192,6 +191,6 @@ public class ItemListActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        retriveEntities();
+        setViewModel();
     }
 }

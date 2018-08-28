@@ -3,6 +3,8 @@ package ru.dekar.qr4all.ui;
 import android.app.Fragment;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModel;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -24,6 +26,8 @@ import com.squareup.picasso.Picasso;
 import ru.dekar.qr4all.AppExecutors;
 import ru.dekar.qr4all.R;
 import ru.dekar.qr4all.database.AppDatabase;
+import ru.dekar.qr4all.database.UpdateItemViewModel;
+import ru.dekar.qr4all.database.UpdateItemViewModelFactory;
 import ru.dekar.qr4all.models.ItemEntity;
 import ru.dekar.qr4all.services.UpdateItemService;
 
@@ -90,11 +94,13 @@ public class ItemDetailFragment extends Fragment {
 
         AppDatabase mDb = AppDatabase.getsInstance(act);
 
-        final LiveData<ItemEntity> mItem = mDb.itemDao().loadById(itemId);
-        mItem.observe(act, new Observer<ItemEntity>() {
+        UpdateItemViewModelFactory factory = new UpdateItemViewModelFactory(mDb, itemId);
+
+        final UpdateItemViewModel viewModel = ViewModelProviders.of(act, factory).get(UpdateItemViewModel.class);
+        viewModel.getItem().observe(act, new Observer<ItemEntity>() {
             @Override
             public void onChanged(@Nullable ItemEntity itemEntity) {
-                if (mItem != null) {
+                if (itemEntity != null) {
                     mItemEntity = itemEntity;
 
                     ((MultiAutoCompleteTextView) rootView.findViewById(R.id.inputItemDetails)).setText(mItemEntity.getDetails());
