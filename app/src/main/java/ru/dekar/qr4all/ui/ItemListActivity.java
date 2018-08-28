@@ -91,33 +91,6 @@ public class ItemListActivity extends AppCompatActivity{
                 intent.putExtra(BarcodeCaptureActivity.UseFlash, true);
 
                 startActivityForResult(intent, RC_BARCODE_CAPTURE);
-
-
-
-
-//                protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//                    if (requestCode == RC_BARCODE_CAPTURE) {
-//                        if (resultCode == CommonStatusCodes.SUCCESS) {
-//                            if (data != null) {
-//                                Barcode barcode = data.getParcelableExtra(BarcodeCaptureActivity.BarcodeObject);
-//                                statusMessage.setText(R.string.barcode_success);
-//                                barcodeValue.setText(barcode.displayValue);
-//                                Log.d(TAG, "Barcode read: " + barcode.displayValue);
-//                            } else {
-//                                statusMessage.setText(R.string.barcode_failure);
-//                                Log.d(TAG, "No barcode captured, intent data is null");
-//                            }
-//                        } else {
-//                            statusMessage.setText(String.format(getString(R.string.barcode_error),
-//                                    CommonStatusCodes.getStatusCodeString(resultCode)));
-//                        }
-//                    }
-//                    else {
-//                        super.onActivityResult(requestCode, resultCode, data);
-//                    }
-//                }
-
-
             }
         });
     }

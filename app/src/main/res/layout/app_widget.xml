@@ -10,9 +10,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/widget_task_title"
-        android:text="Task title"
+        android:text="@string/widget_empty_title"
         android:background="@color/widget_title_background"
         android:textColor="@color/widget_title_text"
+        android:textSize="@dimen/widget_title_text_size"
         />
 
             <TextView
@@ -20,9 +21,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-                android:contentDescription="@string/appwidget_text"
-                android:text="@string/appwidget_text"
+                android:contentDescription="@string/widget_empty_details"
+                android:text="@string/widget_empty_details"
                 android:textColor="@color/widget_text"
-                android:textSize="24sp"
+                android:textSize="@dimen/widget_details_text_size"
                 android:textStyle="bold|italic" />
 </LinearLayout>

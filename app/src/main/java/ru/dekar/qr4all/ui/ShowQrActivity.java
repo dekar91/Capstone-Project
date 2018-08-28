@@ -102,13 +102,20 @@ public class ShowQrActivity extends AppCompatActivity {
             if (AUTO_HIDE) {
                 delayedHide(AUTO_HIDE_DELAY_MILLIS);
             }
+
+            Intent intent = new Intent(activity, ItemDetailActivity.class);
+            intent.putExtra("itemId", mItem.getId());
+            activity.startActivity(intent);
             return false;
         }
     };
 
+    public Activity activity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        activity = this;
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         ItemContent mItemContent = new ItemContent(this);
         final int itemId  = getIntent().getIntExtra("itemId", -1);

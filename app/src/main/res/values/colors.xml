@@ -8,6 +8,7 @@
     <color name="secondary_text">#757575</color>
     <color name="icons">#FFFFFF</color>
     <color name="divider">#BDBDBD</color>
+    <color name="qrcode_background">@color/black_overlay</color>
 
     <color name="widget_title_background">@color/primary</color>
     <color name="widget_title_text">@android:color/white</color>
