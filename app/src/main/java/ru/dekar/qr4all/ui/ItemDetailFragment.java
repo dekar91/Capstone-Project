@@ -136,6 +136,7 @@ public class ItemDetailFragment extends Fragment {
             public void onChanged(@Nullable ItemEntity itemEntity) {
                 if (itemEntity != null) {
                     mItemEntity = itemEntity;
+                    ItemDetailActivity.mItemEntity = mItemEntity;
 
                     inputItemName.setText(mItemEntity.getDetails());
                     inputItemDetails.setText(mItemEntity.getName());

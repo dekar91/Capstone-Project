@@ -1,5 +1,6 @@
 package ru.dekar.qr4all.ui;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
@@ -8,11 +9,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.transition.Explode;
 import android.transition.Slide;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import ru.dekar.qr4all.R;
+import ru.dekar.qr4all.models.ItemEntity;
 
 /**
  * An activity representing a single Item detail screen. This
@@ -23,6 +27,8 @@ import ru.dekar.qr4all.R;
 public class ItemDetailActivity extends AppCompatActivity {
 
     private FirebaseAnalytics mFirebaseAnalytics;
+
+    public static ItemEntity mItemEntity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +74,13 @@ public class ItemDetailActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.itemsdetails, menu);
+
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == android.R.id.home) {
@@ -79,6 +92,13 @@ public class ItemDetailActivity extends AppCompatActivity {
             //
             navigateUpTo(new Intent(this, ItemListActivity.class));
             return true;
+        }
+
+        if(id == R.id.action_tbShowQr && null != mItemEntity)
+        {
+            Bundle transitionBundle = ActivityOptions.makeSceneTransitionAnimation(this).toBundle();
+
+            startActivity((new Intent(this, ShowQrActivity.class)).putExtra(ItemDetailFragment.ARG_ITEM_ID, mItemEntity.getId()), transitionBundle);
         }
         return super.onOptionsItemSelected(item);
     }
