@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/qrcode_background"
+    android:background="@android:color/white"
     tools:context=".ui.ShowQrActivity">
     <!-- This FrameLayout insets its children based on system windows using
          android:fitsSystemWindows. -->
@@ -21,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
-        android:background="@color/black_overlay"
+        android:background="@android:color/white"
         android:orientation="horizontal"
         tools:ignore="UselessParent"/>
 
