@@ -9,9 +9,6 @@
         <item name="colorAccent">@color/accent</item>
 
         <item name="android:windowActivityTransitions">true</item>
-        <item name="android:windowContentTransitions">true</item>
-        <item name="android:windowExitTransition">@transition/explode</item>
-        <item name="android:windowEnterTransition">@transition/explode</item>
 
     </style>
 
