@@ -6,13 +6,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.ItemDetailActivity"
+    android:layout_marginTop="@dimen/activity_vertical_margin"
+    android:layout_marginBottom="@dimen/activity_vertical_margin"
+    android:layout_marginStart="@dimen/activity_horizontal_margin"
+    android:layout_marginEnd="@dimen/activity_horizontal_margin"
     tools:ignore="MergeRootFrame" >
 
     <ImageView
         android:id="@+id/itemPhoto"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:contentDescription="item photo"
+        android:contentDescription="@string/itemPhoto_ContentDescription"
         android:src="@drawable/ic_camera_alt_black_24dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -21,10 +25,10 @@
         android:id="@+id/inputItemName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="item name"
+        android:contentDescription="@string/inputItemName_ContentDescription"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="itemName"
+        android:text=""
         app:layout_constraintStart_toEndOf="@id/itemPhoto"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -37,7 +41,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:contentDescription="item description"
+        android:contentDescription="@string/inputItemDescrption_ContentDescription"
         android:ems="10"
         android:inputType="textMultiLine"
         app:layout_constraintEnd_toEndOf="parent"
@@ -45,30 +49,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/itemPhoto" />
 
-
-    <!--<com.google.android.gms.maps.MapView-->
-    <!--android:id="@+id/mapView"-->
-    <!--android:layout_width="0dp"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_marginBottom="8dp"-->
-    <!--android:layout_marginEnd="8dp"-->
-    <!--android:layout_marginTop="8dp"-->
-    <!--app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--app:layout_constraintDimensionRatio="w,1:1"-->
-    <!--app:layout_constraintEnd_toEndOf="parent"-->
-    <!--app:layout_constraintStart_toEndOf="parent"-->
-    <!--app:layout_constraintStart_toStartOf="parent"-->
-    <!--app:layout_constraintTop_toBottomOf="@+id/itemDescription" />-->
-
     <Button
         android:id="@+id/showQrCode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
         android:clickable="true"
         android:focusable="true"
+        android:contentDescription="@string/showQrCode_ContentDescription"
+        android:text="@string/showQrCode_ContentDescription"
         android:src="@android:drawable/ic_menu_camera"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

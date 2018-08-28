@@ -4,8 +4,7 @@
     <string name="title_activity_main2">Main2Activity</string>
 
     <string name="title_activity_show_qr">ShowQrActivity</string>
-    <string name="dummy_button">close window</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="dummy_button">Close window</string>
     <string name="title_activity_login">Sign in</string>
 
     <!-- Strings related to login -->
@@ -29,7 +28,8 @@
     <string name="widget_empty_details">Please select an item to show information about it</string>
 
 
-    <string name="login_ContentDescription">Loging</string>
+    <string name="login_ContentDescription">Login</string>
+    <string name="itemPhoto_ContentDescription">Item Phote</string>
     <string name="password_ContentDescription">Password</string>
     <string name="item_ContentDescription">Item</string>
     <string name="inputItemName_ContentDescription">Item name</string>
