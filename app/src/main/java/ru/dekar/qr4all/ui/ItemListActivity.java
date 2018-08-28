@@ -1,5 +1,6 @@
 package ru.dekar.qr4all.ui;
 
+import android.app.Activity;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
@@ -7,14 +8,19 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.google.android.gms.common.api.CommonStatusCodes;
+import com.google.android.gms.vision.barcode.Barcode;
 
 import java.util.List;
 
@@ -24,6 +30,7 @@ import ru.dekar.qr4all.database.AppDatabase;
 import ru.dekar.qr4all.database.ItemViewModel;
 import ru.dekar.qr4all.models.ItemContent;
 import ru.dekar.qr4all.models.ItemEntity;
+import ru.dekar.qr4all.parcode.BarcodeCaptureActivity;
 
 /**
  * An activity representing a list of Items. This activity
@@ -33,13 +40,15 @@ import ru.dekar.qr4all.models.ItemEntity;
  * item details. On tablets, the activity presents the list of items and
  * item details side-by-side using two vertical panes.
  */
-public class ItemListActivity extends AppCompatActivity {
+public class ItemListActivity extends AppCompatActivity{
 
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
      * device.
      */
     private boolean mTwoPane;
+
+    private static final int RC_BARCODE_CAPTURE = 9001;
 
     public AppDatabase mDb;
 
@@ -63,6 +72,47 @@ public class ItemListActivity extends AppCompatActivity {
         View recyclerView = findViewById(R.id.item_list);
         assert recyclerView != null;
         setupRecyclerView((RecyclerView) recyclerView);
+
+        FloatingActionButton button = findViewById(R.id.buttonScanQr);
+
+        final Activity act = this;
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(act, BarcodeCaptureActivity.class);
+                intent.putExtra(BarcodeCaptureActivity.AutoFocus, true);
+                intent.putExtra(BarcodeCaptureActivity.UseFlash, true);
+
+                startActivityForResult(intent, RC_BARCODE_CAPTURE);
+
+
+
+
+//                protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//                    if (requestCode == RC_BARCODE_CAPTURE) {
+//                        if (resultCode == CommonStatusCodes.SUCCESS) {
+//                            if (data != null) {
+//                                Barcode barcode = data.getParcelableExtra(BarcodeCaptureActivity.BarcodeObject);
+//                                statusMessage.setText(R.string.barcode_success);
+//                                barcodeValue.setText(barcode.displayValue);
+//                                Log.d(TAG, "Barcode read: " + barcode.displayValue);
+//                            } else {
+//                                statusMessage.setText(R.string.barcode_failure);
+//                                Log.d(TAG, "No barcode captured, intent data is null");
+//                            }
+//                        } else {
+//                            statusMessage.setText(String.format(getString(R.string.barcode_error),
+//                                    CommonStatusCodes.getStatusCodeString(resultCode)));
+//                        }
+//                    }
+//                    else {
+//                        super.onActivityResult(requestCode, resultCode, data);
+//                    }
+//                }
+
+
+            }
+        });
     }
 
 

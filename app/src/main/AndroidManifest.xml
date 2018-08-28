@@ -5,7 +5,8 @@
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <!--<uses-permission android:name="android.permission.READ_CONTACTS" />-->
 
     <application
         android:allowBackup="true"
@@ -40,6 +41,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ru.dekar.qr4all.ui.ItemListActivity" />
         </activity>
+
+        <activity android:name=".parcode.BarcodeCaptureActivity"
+            android:label="Read Barcode"/>
 
         <service android:name=".services.UpdateItemService" />
 
