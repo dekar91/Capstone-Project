@@ -1,16 +1,16 @@
 package ru.dekar.qr4all.ui;
 
-import android.app.Activity;
+import android.app.Fragment;
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.Observer;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
-import android.os.Handler;
-import android.os.Looper;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,14 +20,10 @@ import android.widget.ImageView;
 import android.widget.MultiAutoCompleteTextView;
 
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.PicassoProvider;
-
-import java.util.List;
 
 import ru.dekar.qr4all.AppExecutors;
 import ru.dekar.qr4all.R;
 import ru.dekar.qr4all.database.AppDatabase;
-import ru.dekar.qr4all.models.ItemContent;
 import ru.dekar.qr4all.models.ItemEntity;
 import ru.dekar.qr4all.services.UpdateItemService;
 
@@ -50,6 +46,7 @@ public class ItemDetailFragment extends Fragment {
     private int itemId;
 
     public ItemEntity mItemEntity;
+    public View rootView;
 
 
     /**
@@ -64,17 +61,19 @@ public class ItemDetailFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
 
-
         if (getArguments().containsKey(ARG_ITEM_ID)) {
-            itemId =  Integer.parseInt(getArguments().getString(ARG_ITEM_ID));
+            itemId = Integer.parseInt(getArguments().getString(ARG_ITEM_ID));
         }
 
     }
 
-    public void updateItem(View rootView)
-    {
-        mItemEntity.setName( ((EditText) rootView.findViewById(R.id.inputItemName)).getText().toString());
-        mItemEntity.setDetails( ((EditText) rootView.findViewById(R.id.inputItemDetails)).getText().toString());
+    public void updateItem(View rootView) {
+        String newName = ((EditText) (rootView.findViewById(R.id.inputItemName))).getText().toString();
+        String newDetails = ((EditText) (rootView.findViewById(R.id.inputItemDetails))).getText().toString();
+        if (mItemEntity != null && (mItemEntity.getName().equals(newName) || mItemEntity.getDetails().equals(newDetails))) {
+            mItemEntity.setName(newName);
+            mItemEntity.setDetails(newDetails);
+
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
             public void run() {
@@ -83,102 +82,73 @@ public class ItemDetailFragment extends Fragment {
                 mDatabase.itemDao().updateItem(mItemEntity);
             }
         });
-
+        }
     }
 
-    public void updateUi(final View rootView, final int itemId)
-    {
-        final Activity act = getActivity();
+    public void updateUi(final View rootView, final int itemId) {
+        final AppCompatActivity act = (AppCompatActivity) getActivity();
 
-        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+        AppDatabase mDb = AppDatabase.getsInstance(act);
+
+        final LiveData<ItemEntity> mItem = mDb.itemDao().loadById(itemId);
+        mItem.observe(act, new Observer<ItemEntity>() {
             @Override
-            public void run() {
-                AppDatabase mDatabase = AppDatabase.getsInstance(getContext());
+            public void onChanged(@Nullable ItemEntity itemEntity) {
+                if (mItem != null) {
+                    mItemEntity = itemEntity;
 
-                 final ItemEntity mItem = mDatabase.itemDao().loadById(itemId);
+                    ((MultiAutoCompleteTextView) rootView.findViewById(R.id.inputItemDetails)).setText(mItemEntity.getDetails());
+                    ((TextInputEditText) rootView.findViewById(R.id.inputItemName)).setText(mItemEntity.getName());
 
+                    Picasso.get().load(Uri.parse(mItemEntity.getImageUrl())).into((ImageView) rootView.findViewById(R.id.itemPhoto));
 
-                if(mItem != null)
-                {
-                    mItemEntity = mItem;
-
-                    ((MultiAutoCompleteTextView) rootView.findViewById(R.id.inputItemDetails)).setText(mItem.getDetails());
-                    ((TextInputEditText) rootView.findViewById(R.id.inputItemName)).setText(mItem.getName());
-
-                    act.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Picasso.get().load(Uri.parse(mItem.getImageUrl())).into((ImageView) rootView.findViewById(R.id.itemPhoto));
-
-                        }
-                    });
 
                     Button img = rootView.findViewById(R.id.showQrCode);
                     img.setOnClickListener(
                             new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-                                    startActivity((new Intent(getActivity(), ShowQrActivity.class)).putExtra("itemId", mItem.getId()));
+                                    startActivity((new Intent(getActivity(), ShowQrActivity.class)).putExtra("itemId", mItemEntity.getId()));
                                 }
                             });
 
 
                     // Update widget
-                    UpdateItemService.startUpdateItemService(getContext(), mItem);
+                    UpdateItemService.startUpdateItemService(getContext(), mItemEntity);
                 }
-                }
+            }
 
-            });
+        });
 
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateItem(rootView);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        updateItem(rootView);
+
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        updateItem(rootView);
+
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        final View rootView = inflater.inflate(R.layout.item_detail, container, false);
-
-        EditText eName = (EditText) rootView.findViewById(R.id.inputItemName);
-        EditText eDetails = (EditText)  rootView.findViewById(R.id.inputItemDetails);
-
-        eName.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                updateItem(rootView);
-
-            }
-        });
-
-
-        eDetails.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                updateItem(rootView);
-
-            }
-        });
-
-
+        rootView = inflater.inflate(R.layout.item_detail, container, false);
         updateUi(rootView, itemId);
 
         return rootView;

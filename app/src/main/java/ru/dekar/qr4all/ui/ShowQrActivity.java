@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.TextInputEditText;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -27,7 +28,7 @@ import ru.dekar.qr4all.services.UpdateItemService;
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
-public class ShowQrActivity extends Activity {
+public class ShowQrActivity extends AppCompatActivity {
     /**
      * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
@@ -121,7 +122,7 @@ public class ShowQrActivity extends Activity {
             public void run() {
                 AppDatabase mDatabase = AppDatabase.getsInstance(act);
 
-                final ItemEntity mItem = mDatabase.itemDao().loadById(itemId);
+                final ItemEntity mItem = mDatabase.itemDao().loadById(itemId).getValue();
 
 
                 if(mItem != null)

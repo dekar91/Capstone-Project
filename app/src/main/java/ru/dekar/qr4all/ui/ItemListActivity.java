@@ -1,10 +1,14 @@
 package ru.dekar.qr4all.ui;
 
+import android.app.Activity;
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.app.Activity;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -13,12 +17,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.List;
+
 import ru.dekar.qr4all.AppExecutors;
 import ru.dekar.qr4all.R;
 import ru.dekar.qr4all.database.AppDatabase;
+import ru.dekar.qr4all.models.ItemContent;
 import ru.dekar.qr4all.models.ItemEntity;
-
-import java.util.List;
 
 /**
  * An activity representing a list of Items. This activity
@@ -28,7 +33,7 @@ import java.util.List;
  * item details. On tablets, the activity presents the list of items and
  * item details side-by-side using two vertical panes.
  */
-public class ItemListActivity extends Activity {
+public class ItemListActivity extends AppCompatActivity {
 
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
@@ -61,22 +66,25 @@ public class ItemListActivity extends Activity {
     }
 
 
-    public void retriveEntities()
-    {
-        final Activity act = this;
-        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+    public void retriveEntities() {
+        final LiveData<List<ItemEntity>> listEntities = mDb.itemDao().loadAllItems();
+        listEntities.observe(this, new Observer<List<ItemEntity>>() {
             @Override
-            public void run() {
-                mItemEntities = mDb.itemDao().loadAllItems();
-                act.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        mItemAdapter.setmValues(mItemEntities);
+            public void onChanged(@Nullable List<ItemEntity> itemEntities) {
+
+                if (itemEntities.size() == 0)
+                    for (int i = 1; i <= 25; i++) {
+                        ItemEntity mEntry = ItemContent.createDummyItem(i);
+                        mDb.itemDao().insertItem(mEntry);
                     }
-                });
+
+                mItemEntities = itemEntities;
+                mItemAdapter.setmValues(mItemEntities);
             }
         });
+
     }
+
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
         DividerItemDecoration decorator = new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL);
