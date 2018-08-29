@@ -38,6 +38,7 @@
         <activity
             android:name=".ui.ItemDetailActivity"
             android:label="@string/title_item_detail"
+            android:theme="@style/AppTheme.NoActionBar"
             android:parentActivityName=".ui.ItemListActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

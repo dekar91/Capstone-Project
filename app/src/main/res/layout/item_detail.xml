@@ -6,11 +6,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.ItemDetailActivity"
-    android:layout_marginTop="@dimen/activity_vertical_margin"
-    android:layout_marginBottom="@dimen/activity_vertical_margin"
-    android:layout_marginStart="@dimen/activity_horizontal_margin"
-    android:layout_marginEnd="@dimen/activity_horizontal_margin"
     tools:ignore="MergeRootFrame" >
+
+    <android.support.v7.widget.Toolbar
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+
+        android:id="@+id/my_toolwbar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="100dp"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
 
     <ImageView
         android:id="@+id/itemPhoto"
@@ -19,7 +32,7 @@
         android:contentDescription="@string/itemPhoto_ContentDescription"
         android:src="@drawable/ic_camera_alt_black_24dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/my_toolwbar" />
 
     <TextView
         android:id="@+id/itemIdLabel"
@@ -28,7 +41,7 @@
         android:text="@string/itemId"
         android:labelFor="@+id/inputItemName"
         app:layout_constraintStart_toEndOf="@id/itemPhoto"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/my_toolwbar"
         app:layout_constraintEnd_toStartOf="@id/itemId"
         style="@style/AppTheme.FormLabel"
         />
