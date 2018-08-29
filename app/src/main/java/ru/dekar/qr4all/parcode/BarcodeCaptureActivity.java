@@ -41,6 +41,7 @@ import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.CommonStatusCodes;
+import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.MultiProcessor;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
@@ -48,7 +49,6 @@ import com.google.android.gms.vision.barcode.BarcodeDetector;
 import java.io.IOException;
 
 import ru.dekar.qr4all.R;
-import ru.dekar.qr4all.parcode.ui.camera.CameraSource;
 import ru.dekar.qr4all.parcode.ui.camera.CameraSourcePreview;
 import ru.dekar.qr4all.parcode.ui.camera.GraphicOverlay;
 import ru.dekar.qr4all.ui.ItemDetailActivity;
@@ -73,7 +73,7 @@ public class BarcodeCaptureActivity extends AppCompatActivity implements Barcode
     public static final String UseFlash = "UseFlash";
     public static final String BarcodeObject = "Barcode";
 
-    private ru.dekar.qr4all.parcode.ui.camera.CameraSource mCameraSource;
+    private CameraSource mCameraSource;
     private CameraSourcePreview mPreview;
     private GraphicOverlay<BarcodeGraphic> mGraphicOverlay;
 
@@ -430,6 +430,7 @@ public class BarcodeCaptureActivity extends AppCompatActivity implements Barcode
     public void onBarcodeDetected(Barcode barcode) {
 
         Intent intent = new Intent(activity, ItemDetailActivity.class);
+
         String barcodeValue;
 
         if(barcode.rawValue != null)
@@ -437,9 +438,9 @@ public class BarcodeCaptureActivity extends AppCompatActivity implements Barcode
         else
             barcodeValue = "";
 
+
         intent.putExtra(ItemDetailFragment.ARG_ITEM_ID, barcodeValue);
-        Bundle transitionBundle = ActivityOptions.makeSceneTransitionAnimation(this).toBundle();
-        activity.startActivity(intent, transitionBundle);
+        activity.startActivity(intent);
 
     }
 }
