@@ -3,12 +3,15 @@ package ru.dekar.qr4all.ui;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
+import android.app.Activity;
+import android.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.transition.Explode;
 import android.transition.Slide;
 import android.view.Gravity;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
@@ -41,15 +44,12 @@ public class ItemDetailActivity extends AppCompatActivity {
 
         getWindow().setExitTransition(new Explode());
         // Show the Up button in the action bar.
+        ActionBar actionBar = getActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
-
-        Toolbar toolbar = findViewById(R.id.my_toolwbar);
-
-        if(null != toolbar)
-            setSupportActionBar(toolbar);
-
-        getSupportActionBar().setHomeButtonEnabled(true);
 
 
         // savedInstanceState is non-null when there is fragment state
@@ -73,7 +73,6 @@ public class ItemDetailActivity extends AppCompatActivity {
                     .add(R.id.item_detail_container, fragment)
                     .commit();
         }
-
     }
 
     @Override
