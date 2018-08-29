@@ -19,16 +19,17 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
-        android:elevation="100dp"
+        android:elevation="@dimen/toolBarElevation"
         android:theme="@style/AppTheme.AppBarOverlay"
         android:layout_marginBottom="@dimen/activity_horizontal_margin"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
 
     <ImageView
         android:id="@+id/itemPhoto"
         android:layout_width="165dp"
         android:layout_height="139dp"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
         android:contentDescription="@string/itemPhoto_ContentDescription"
         android:src="@drawable/ic_camera_alt_black_24dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -36,6 +37,7 @@
 
     <TextView
         android:id="@+id/itemIdLabel"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/itemId"
