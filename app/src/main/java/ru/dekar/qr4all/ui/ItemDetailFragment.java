@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -32,6 +33,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.dekar.qr4all.AppExecutors;
@@ -52,6 +54,7 @@ public class ItemDetailFragment extends Fragment {
     @BindView(R.id.inputItemName)      EditText inputItemName;
     @BindView(R.id.inputItemDetails)   EditText inputItemDetails;
     @BindView(R.id.itemId)             TextView itemIdView;
+    @BindView(R.id.itemPhoto)          ImageView itemPhoto;
 
     private FirebaseAnalytics mFirebaseAnalytics;
 
@@ -80,7 +83,6 @@ public class ItemDetailFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
 
         if (getArguments().containsKey(ARG_ITEM_ID)) {
             String arg = getArguments().getString(ARG_ITEM_ID);
@@ -141,8 +143,9 @@ public class ItemDetailFragment extends Fragment {
                     inputItemDetails.setText(mItemEntity.getName());
                     itemIdView.setText(String.valueOf(mItemEntity.getId()));
 
-                    Picasso.get().load(Uri.parse(mItemEntity.getImageUrl())).into((ImageView) rootView.findViewById(R.id.itemPhoto));
+                    itemPhoto.setContentDescription(R.string.itemPhoto_ContentDescription + " " + mItemEntity.getName());
 
+                    Picasso.get().load(Uri.parse(mItemEntity.getImageUrl())).into(itemPhoto);
                     act.setTitle(mItemEntity.getName());
 
                     // Update widget

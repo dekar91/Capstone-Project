@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.transition.Explode;
 import android.transition.Slide;
 import android.view.Gravity;
@@ -29,6 +30,7 @@ public class ItemDetailActivity extends AppCompatActivity {
     private FirebaseAnalytics mFirebaseAnalytics;
 
     public static ItemEntity mItemEntity;
+    protected Toolbar myToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

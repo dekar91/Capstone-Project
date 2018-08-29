@@ -111,7 +111,7 @@ public class BarcodeCaptureActivity extends AppCompatActivity implements Barcode
         gestureDetector = new GestureDetector(this, new CaptureGestureListener());
         scaleGestureDetector = new ScaleGestureDetector(this, new ScaleListener());
 
-        Snackbar.make(mGraphicOverlay, "Tap to capture. Pinch/Stretch to zoom",
+        Snackbar.make(mGraphicOverlay, R.string.tap_to_scan,
                 Snackbar.LENGTH_LONG)
                 .show();
     }
@@ -430,7 +430,14 @@ public class BarcodeCaptureActivity extends AppCompatActivity implements Barcode
     public void onBarcodeDetected(Barcode barcode) {
 
         Intent intent = new Intent(activity, ItemDetailActivity.class);
-        intent.putExtra(ItemDetailFragment.ARG_ITEM_ID, String.valueOf(barcode.rawValue));
+        String barcodeValue;
+
+        if(barcode.rawValue != null)
+            barcodeValue = String.valueOf(barcode.rawValue);
+        else
+            barcodeValue = "";
+
+        intent.putExtra(ItemDetailFragment.ARG_ITEM_ID, barcodeValue);
         Bundle transitionBundle = ActivityOptions.makeSceneTransitionAnimation(this).toBundle();
         activity.startActivity(intent, transitionBundle);
 

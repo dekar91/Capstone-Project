@@ -13,6 +13,7 @@
         style="?metaButtonBarButtonStyle"
         android:layout_width="410dp"
         android:layout_height="wrap_content"
+        android:contentDescription="@string/dummy_button"
         android:text="@string/dummy_button" />
 
     <LinearLayout
@@ -39,6 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/activity_vertical_margin"
+            android:contentDescription="@string/showQrCode_ContentDescription"
             android:layout_weight="1" />
 
     </android.support.constraint.ConstraintLayout>

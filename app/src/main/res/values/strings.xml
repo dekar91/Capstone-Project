@@ -19,6 +19,8 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="tap_to_scan">"Tap to capture. Pinch/Stretch to zoom"</string>
+
     <string name="title_item_list">Items</string>
     <string name="title_item_detail">Item Detail</string>
     <string name="appwidget_text">EXAMPLE</string>
@@ -44,5 +46,6 @@
     <string name="barcode_success">Barcode read successfully</string>
     <string name="barcode_failure">No barcode captured</string>
     <string name="barcode_error">"Error reading barcode: %1$s"</string>
+    <string name="no_authorization">Authrozation has not implemented yet, sorry</string>
 
 </resources>

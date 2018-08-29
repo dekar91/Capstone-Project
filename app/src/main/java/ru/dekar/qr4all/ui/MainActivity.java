@@ -162,7 +162,7 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<C
         bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "testLogin");
         mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.LOGIN, bundle);
 
-        Toast toast = Toast.makeText(this, "Authrozation has not implemented yet, sorry", Toast.LENGTH_SHORT);
+        Toast toast = Toast.makeText(this, R.string.no_authorization, Toast.LENGTH_SHORT);
         toast.show();
 
         Bundle transitionBundle = ActivityOptions.makeSceneTransitionAnimation(this).toBundle();

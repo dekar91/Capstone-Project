@@ -15,6 +15,7 @@
         android:focusable="true"
         android:layout_margin="@dimen/activity_horizontal_margin"
         android:src="@drawable/ic_camera_alt_black_24dp"
+        android:contentDescription="@string/showQrCode_ContentDescription"
         app:rippleColor="@color/primary_dark" />
 
     <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"

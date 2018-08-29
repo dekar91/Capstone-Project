@@ -17,6 +17,7 @@
     <string name="title_item_detail">Просмотр элемента</string>
     <string name="appwidget_text">Пример</string>
     <string name="add_widget">Добавить виджет</string>
+    <string name="tap_to_scan">"Tap to capture. Pinch/Stretch to zoom"</string>
 
     <string name="widget_empty_title">Элемент не выбран</string>
     <string name="widget_empty_details">Пожалуйста выберите элемент чтобы увидеть информацию о нём.</string>
@@ -39,5 +40,6 @@
     <string name="barcode_success">РАспознано</string>
     <string name="barcode_failure">БАркод не найден</string>
     <string name="barcode_error">"Ошибка чтения кода: %1$s"</string>
+    <string name="no_authorization">Authrozation has not implemented yet, sorry</string>
 
 </resources>
