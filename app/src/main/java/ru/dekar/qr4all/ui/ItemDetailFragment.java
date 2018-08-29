@@ -63,7 +63,7 @@ public class ItemDetailFragment extends Fragment implements OnMapReadyCallback, 
     @BindView(R.id.inputItemDetails)   EditText inputItemDetails;
     @BindView(R.id.itemId)             TextView itemIdView;
 
-    GoogleMap mMap;
+    public static GoogleMap mMap;
     private FirebaseAnalytics mFirebaseAnalytics;
 
     /**
@@ -131,6 +131,8 @@ public class ItemDetailFragment extends Fragment implements OnMapReadyCallback, 
                 }
             });
         }
+
+        setMapMarker();
     }
 
     public void updateUi(final View rootView, final int itemId) {
@@ -243,7 +245,7 @@ public class ItemDetailFragment extends Fragment implements OnMapReadyCallback, 
     }
 
     public void onMapReady(GoogleMap retMap) {
-        mMap =retMap;
+        mMap = retMap;
         mMap.getUiSettings().setZoomControlsEnabled(true);
         setMapMarker();
     }
