@@ -1,5 +1,6 @@
 package ru.dekar.qr4all.ui;
 
+import android.app.ActionBar;
 import android.app.ActivityOptions;
 import android.app.Fragment;
 import android.arch.lifecycle.Observer;
@@ -10,6 +11,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -182,6 +184,15 @@ public class ItemDetailFragment extends Fragment {
         AppCompatActivity activity = (AppCompatActivity)getActivity();
         activity.setSupportActionBar(profile_toolbar);
         android.support.v7.app.ActionBar actionBar = activity.getSupportActionBar();
+        if(actionBar != null)
+            actionBar.setDisplayShowHomeEnabled(true);
+        try{
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeButtonEnabled(true);
+
+        } catch (Exception e) {
+            Log.v("itemfragment", "Can not setUp Up button");
+        }
 
         updateUi(rootView, itemId);
 
