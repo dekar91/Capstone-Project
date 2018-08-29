@@ -23,8 +23,14 @@ public class AppWidget extends AppWidgetProvider {
 
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.app_widget);
-        views.setTextViewText(R.id.widget_task_title, itemName);
-        views.setTextViewText(R.id.widget_task_description, itemDetails);
+        if(!itemDetails.isEmpty() && !itemName.isEmpty())
+        {
+            views.setTextViewText(R.id.widget_task_title, itemName);
+            views.setTextViewText(R.id.widget_task_description, itemDetails);
+        }  else {
+            views.setTextViewText(R.id.widget_task_title,context.getResources().getString(R.string.widget_empty_title));
+            views.setTextViewText(R.id.widget_task_description, context.getResources().getString(R.string.widget_empty_details));
+        }
 
 
         // Instruct the widget manager to update the widget

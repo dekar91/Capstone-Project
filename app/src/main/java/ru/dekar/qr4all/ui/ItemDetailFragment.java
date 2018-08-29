@@ -144,6 +144,9 @@ public class ItemDetailFragment extends Fragment {
                     toast.show();
                     Intent intent = new Intent(getActivity(), ItemListActivity.class);
                     getContext().startActivity(intent);
+
+                    // Update widget
+                    UpdateItemService.startUpdateItemService(getContext(), null);
                 }
             }
 
@@ -169,7 +172,6 @@ public class ItemDetailFragment extends Fragment {
         super.onStop();
 
         updateItem(rootView);
-
     }
 
 

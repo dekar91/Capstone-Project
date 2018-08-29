@@ -18,8 +18,16 @@ public class UpdateItemService extends IntentService{
     public static void startUpdateItemService(Context context, ItemEntity itemEntity)
     {
         Intent intent = new Intent(context, UpdateItemService.class);
-        intent.putExtra(ITEM_NAME, itemEntity.getName());
-        intent.putExtra(ITEM_DETAILS, itemEntity.getDetails());
+        if(null != itemEntity)
+        {
+            intent.putExtra(ITEM_NAME, itemEntity.getName());
+            intent.putExtra(ITEM_DETAILS, itemEntity.getDetails());
+        } else
+        {
+            intent.putExtra(ITEM_NAME, "");
+            intent.putExtra(ITEM_DETAILS, "");
+        }
+
         context.startService(intent);
     }
 

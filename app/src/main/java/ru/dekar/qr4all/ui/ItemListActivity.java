@@ -20,8 +20,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.google.android.gms.common.api.CommonStatusCodes;
-import com.google.android.gms.vision.barcode.Barcode;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.List;
@@ -31,9 +29,9 @@ import ru.dekar.qr4all.R;
 import ru.dekar.qr4all.database.AppDatabase;
 import ru.dekar.qr4all.database.ItemViewModel;
 import ru.dekar.qr4all.mocks.ItemMocks;
-import ru.dekar.qr4all.models.ItemContent;
 import ru.dekar.qr4all.models.ItemEntity;
 import ru.dekar.qr4all.parcode.BarcodeCaptureActivity;
+import ru.dekar.qr4all.services.UpdateItemService;
 
 /**
  * An activity representing a list of Items. This activity
@@ -78,6 +76,8 @@ public class ItemListActivity extends AppCompatActivity{
             mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         }
+
+        UpdateItemService.startUpdateItemService(this, null);
 
         View recyclerView = findViewById(R.id.item_list);
         assert recyclerView != null;
@@ -234,5 +234,8 @@ public class ItemListActivity extends AppCompatActivity{
     protected void onResume() {
         super.onResume();
         setViewModel();
+
+        UpdateItemService.startUpdateItemService(this, null);
+
     }
 }
