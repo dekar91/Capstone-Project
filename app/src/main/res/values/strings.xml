@@ -29,6 +29,7 @@
     <string name="widget_empty_title">No item selected</string>
     <string name="widget_empty_details">Please select an item to show information about it</string>
 
+    <string name="scanQRCodeButtonDescription">Scan QR code</string>
 
     <string name="login_ContentDescription">Login</string>
     <string name="itemPhoto_ContentDescription">Item Phote</string>
