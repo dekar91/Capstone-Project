@@ -20,12 +20,16 @@ public class ItemEntity {
     private String codeUrl;
     @ColumnInfo(name = "updated_at")
     private Date updatedAt;
+    private String longitude;
+    private String latitude;
 
-    public ItemEntity(String name, String details, String imageUrl, String codeUrl, Date updatedAt) {
+    public ItemEntity(String name, String details, String imageUrl, String codeUrl, String longitude, String latitude, Date updatedAt) {
         this.name = name;
         this.details = details;
         this.imageUrl = imageUrl;
         this.codeUrl = codeUrl;
+        this.longitude = longitude;
+        this.latitude = latitude;
 
         if(null== updatedAt)
             this.updatedAt = new Date();
@@ -33,13 +37,31 @@ public class ItemEntity {
             this.updatedAt = updatedAt;
     }
 
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
     @Ignore
-    public ItemEntity(int id, String name, String details, String imageUrl, String codeUrl, Date updatedAt) {
+    public ItemEntity(int id, String name, String details, String imageUrl, String codeUrl, String longitude, String latitude, Date updatedAt) {
         this.id = id;
         this.name = name;
         this.details = details;
         this.imageUrl = imageUrl;
         this.codeUrl = codeUrl;
+        this.longitude = longitude;
+        this.latitude = latitude;
 
         if(null== updatedAt)
             this.updatedAt = new Date();

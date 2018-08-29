@@ -31,7 +31,6 @@ import ru.dekar.qr4all.R;
 import ru.dekar.qr4all.database.AppDatabase;
 import ru.dekar.qr4all.database.ItemViewModel;
 import ru.dekar.qr4all.mocks.ItemMocks;
-import ru.dekar.qr4all.models.ItemContent;
 import ru.dekar.qr4all.models.ItemEntity;
 import ru.dekar.qr4all.parcode.BarcodeCaptureActivity;
 
@@ -105,13 +104,13 @@ public class ItemListActivity extends AppCompatActivity{
             @Override
             public void onChanged(@Nullable List<ItemEntity> itemEntities) {
 
-                if (itemEntities.size() < 10)
+                if (itemEntities.size() == 0)
                 {
                     AppExecutors.getInstance().diskIO().execute(new Runnable() {
                         @Override
                         public void run() {
                             List<ItemEntity> mocks = ItemMocks.getMocks();
-                            for (int i = 1; i < mocks.size(); i++) {
+                            for (int i = 0; i < mocks.size(); i++) {
                                 mDb.itemDao().insertItem(mocks.get(i));
                             };
                         }
