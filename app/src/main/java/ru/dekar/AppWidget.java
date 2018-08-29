@@ -80,11 +80,12 @@ public class AppWidget extends AppWidgetProvider {
         if (action.equals(UpdateItemService.INTENT_NAME)) {
             itemName = intent.getStringExtra(UpdateItemService.ITEM_NAME);
             itemDetails = intent.getStringExtra(UpdateItemService.ITEM_DETAILS);
-            appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.layout.app_widget);
+        }
+        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.layout.app_widget);
             //Now update all widgets
             AppWidget.updateAppWidgets(context, appWidgetManager, appWidgetIds);
             super.onReceive(context, intent);
-        }
+
     }
 }
 
