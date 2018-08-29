@@ -3,6 +3,7 @@ package ru.dekar.qr4all.ui;
 import android.app.ActionBar;
 import android.app.ActivityOptions;
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.app.ListActivity;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
@@ -29,10 +30,12 @@ import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.squareup.picasso.Picasso;
@@ -55,12 +58,10 @@ import ru.dekar.qr4all.services.UpdateItemService;
  * in two-pane mode (on tablets) or a {@link ItemDetailActivity}
  * on handsets.
  */
-public class ItemDetailFragment extends Fragment implements OnMapReadyCallback{
+public class ItemDetailFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMarkerDragListener{
     @BindView(R.id.inputItemName)      EditText inputItemName;
     @BindView(R.id.inputItemDetails)   EditText inputItemDetails;
     @BindView(R.id.itemId)             TextView itemIdView;
-    @BindView(R.id.mapView)            MapView mapView;
-
 
     GoogleMap mMap;
     private FirebaseAnalytics mFirebaseAnalytics;
@@ -154,6 +155,7 @@ public class ItemDetailFragment extends Fragment implements OnMapReadyCallback{
                     Picasso.get().load(Uri.parse(mItemEntity.getImageUrl())).into((ImageView) rootView.findViewById(R.id.itemPhoto));
 
                     act.setTitle(mItemEntity.getName());
+                    setMapMarker();
 
                     // Update widget
                     UpdateItemService.startUpdateItemService(getContext(), mItemEntity);
@@ -190,21 +192,63 @@ public class ItemDetailFragment extends Fragment implements OnMapReadyCallback{
 
     }
 
+    Marker marker;
+
+    public void setMapMarker()
+    {
+        if(null != mItemEntity && null != mMap && null != mItemEntity.getLatitude() && null != mItemEntity.getLongitude())
+        {
+            LatLng point = new LatLng(Double.parseDouble(mItemEntity.getLatitude()), Double.parseDouble(mItemEntity.getLongitude()));
+
+            marker = mMap.addMarker(new MarkerOptions().position(point).title(mItemEntity.getName()).draggable(true));
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(point));
+            mMap.setOnMarkerDragListener(this);
+        }
+    }
+
+    @Override
+    public void onMarkerDragStart(Marker marker) {
+
+    }
+
+    @Override
+    public void onMarkerDrag(Marker marker) {
+
+    }
+
+    @Override
+    public void onMarkerDragEnd(Marker marker) {
+        String lon = String.valueOf(marker.getPosition().longitude);
+        String lat = String.valueOf(marker.getPosition().latitude);
+        if(null != mItemEntity && (!mItemEntity.getLatitude().equals(lat) || mItemEntity.getLongitude().equals(lon)))
+        {
+            mItemEntity.setLatitude(lat);
+            mItemEntity.setLongitude(lon);
+
+            AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                @Override
+                public void run() {
+                    AppDatabase mDatabase = AppDatabase.getsInstance(getContext());
+
+                    mDatabase.itemDao().updateItem(mItemEntity);
+                }
+            });
+        }
+
+    }
+
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        mapView.onSaveInstanceState(outState);
     }
 
     public void onMapReady(GoogleMap retMap) {
         mMap =retMap;
-
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
         mMap.getUiSettings().setZoomControlsEnabled(true);
+        setMapMarker();
     }
+
+    public static MapFragment mMapFragment;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -213,9 +257,17 @@ public class ItemDetailFragment extends Fragment implements OnMapReadyCallback{
         rootView = inflater.inflate(R.layout.item_detail, container, false);
         ButterKnife.bind(this, rootView);
 
-        MapsInitializer.initialize(this.getActivity());
-        mapView.onCreate(savedInstanceState);
-        mapView.getMapAsync(this);
+        if (null == mMapFragment)
+        {
+            MapFragment mMapFragment = MapFragment.newInstance();
+            FragmentTransaction fragmentTransaction =
+                    getChildFragmentManager().beginTransaction();
+            fragmentTransaction.add(R.id.map, mMapFragment);
+            fragmentTransaction.commit();
+            mMapFragment.getMapAsync(this);
+        }
+
+
 
         updateUi(rootView, itemId);
 

@@ -1,112 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/item_detail"
+<ScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.ItemDetailActivity"
-    android:layout_marginTop="@dimen/activity_vertical_margin"
-    android:layout_marginBottom="@dimen/activity_vertical_margin"
-    android:layout_marginStart="@dimen/activity_horizontal_margin"
-    android:layout_marginEnd="@dimen/activity_horizontal_margin"
-    tools:ignore="MergeRootFrame" >
-
-    <ImageView
-        android:id="@+id/itemPhoto"
-        android:layout_width="165dp"
-        android:layout_height="139dp"
-        android:contentDescription="@string/itemPhoto_ContentDescription"
-        android:src="@drawable/ic_camera_alt_black_24dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/itemIdLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/itemId"
-        android:labelFor="@+id/inputItemName"
-        app:layout_constraintStart_toEndOf="@id/itemPhoto"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/itemId"
-        style="@style/AppTheme.FormLabel"
-        />
-    <TextView
-        android:id="@+id/itemId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/activity_vertical_margin"
-        android:text="@string/itemIdContentDescription"
-        app:layout_constraintStart_toEndOf="@id/itemIdLabel"
-        app:layout_constraintTop_toTopOf="@id/itemIdLabel"
-        app:layout_constraintBottom_toBottomOf="@id/itemIdLabel"
-        />
-
-
-    <TextView
-        android:id="@+id/itemNameLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/inputItemName_ContentDescription"
-        android:labelFor="@+id/inputItemName"
-        app:layout_constraintStart_toEndOf="@id/itemPhoto"
-        app:layout_constraintTop_toBottomOf="@id/itemIdLabel"
-        style="@style/AppTheme.FormLabel"
-        />
-    <android.support.design.widget.TextInputEditText
-        android:id="@+id/inputItemName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/inputItemName_ContentDescription"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text=""
-        app:layout_constraintStart_toEndOf="@id/itemPhoto"
-        app:layout_constraintTop_toBottomOf="@id/itemNameLabel"
-        />
-
-    <TextView
-        android:id="@+id/itemDetailsLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/inputItemDescrption_ContentDescription"
-        android:labelFor="@+id/inputItemDetails"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/itemPhoto"
-        style="@style/AppTheme.FormLabel"
-
-        />
-
-    <android.support.v7.widget.AppCompatMultiAutoCompleteTextView
-        android:id="@+id/inputItemDetails"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:contentDescription="@string/inputItemDescrption_ContentDescription"
-        android:ems="10"
-        android:inputType="textMultiLine"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/itemDetailsLabel" />
-
-    <com.google.android.gms.maps.MapView
-    android:id="@+id/mapView"
-    android:layout_width="0dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    tools:ignore="MergeRootFrame"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+<LinearLayout
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="8dp"
-    android:layout_marginEnd="8dp"
-    android:layout_marginTop="8dp"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintDimensionRatio="w,1:1"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/item_detail" />
+    android:orientation="vertical"
+    >
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/item_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        >
 
-</android.support.constraint.ConstraintLayout>
+        <ImageView
+            android:id="@+id/itemPhoto"
+            android:layout_width="165dp"
+            android:layout_height="139dp"
+            android:contentDescription="@string/itemPhoto_ContentDescription"
+            android:src="@drawable/ic_camera_alt_black_24dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/itemIdLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/itemId"
+            android:labelFor="@+id/inputItemName"
+            app:layout_constraintStart_toEndOf="@id/itemPhoto"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/itemId"
+            style="@style/AppTheme.FormLabel"
+            />
+        <TextView
+            android:id="@+id/itemId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_vertical_margin"
+            android:text="@string/itemIdContentDescription"
+            app:layout_constraintStart_toEndOf="@id/itemIdLabel"
+            app:layout_constraintTop_toTopOf="@id/itemIdLabel"
+            app:layout_constraintBottom_toBottomOf="@id/itemIdLabel"
+            />
+
+
+        <TextView
+            android:id="@+id/itemNameLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/inputItemName_ContentDescription"
+            android:labelFor="@+id/inputItemName"
+            app:layout_constraintStart_toEndOf="@id/itemPhoto"
+            app:layout_constraintTop_toBottomOf="@id/itemIdLabel"
+            style="@style/AppTheme.FormLabel"
+            />
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/inputItemName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/inputItemName_ContentDescription"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text=""
+            app:layout_constraintStart_toEndOf="@id/itemPhoto"
+            app:layout_constraintTop_toBottomOf="@id/itemNameLabel"
+            />
+
+        <TextView
+            android:id="@+id/itemDetailsLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/inputItemDescrption_ContentDescription"
+            android:labelFor="@+id/inputItemDetails"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/itemPhoto"
+            style="@style/AppTheme.FormLabel"
+
+            />
+
+        <android.support.v7.widget.AppCompatMultiAutoCompleteTextView
+            android:id="@+id/inputItemDetails"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:contentDescription="@string/inputItemDescrption_ContentDescription"
+            android:ems="10"
+            android:inputType="textMultiLine"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/itemDetailsLabel" />
+    </android.support.constraint.ConstraintLayout>
+
+    <LinearLayout
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:minHeight="400dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        />
+
+</LinearLayout>
+</ScrollView>

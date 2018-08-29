@@ -27,7 +27,6 @@ import com.squareup.picasso.Picasso;
 import ru.dekar.qr4all.AppExecutors;
 import ru.dekar.qr4all.R;
 import ru.dekar.qr4all.database.AppDatabase;
-import ru.dekar.qr4all.models.ItemContent;
 import ru.dekar.qr4all.models.ItemEntity;
 import ru.dekar.qr4all.services.UpdateItemService;
 
@@ -125,7 +124,6 @@ public class ShowQrActivity extends AppCompatActivity {
 
         activity = this;
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
-        ItemContent mItemContent = new ItemContent(this);
         final int itemId  = getIntent().getIntExtra(ItemDetailFragment.ARG_ITEM_ID, -1);
 
         // TODO: return to previous activity if -1
