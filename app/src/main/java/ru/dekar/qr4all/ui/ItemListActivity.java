@@ -2,6 +2,7 @@ package ru.dekar.qr4all.ui;
 
 import android.app.Activity;
 import android.app.ActivityOptions;
+import android.app.FragmentTransaction;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
@@ -21,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.google.android.gms.common.api.CommonStatusCodes;
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
@@ -170,6 +172,13 @@ public class ItemListActivity extends AppCompatActivity{
                     mParentActivity.getFragmentManager().beginTransaction()
                             .replace(R.id.item_detail_container, fragment)
                             .commit();
+
+                    MapFragment mMapFragment = MapFragment.newInstance();
+                    FragmentTransaction fragmentTransaction =
+                            mParentActivity.getFragmentManager().beginTransaction();
+                    fragmentTransaction.add(R.id.map, mMapFragment);
+                    fragmentTransaction.commit();
+                    mMapFragment.getMapAsync(fragment);
                 } else {
                     Context context = view.getContext();
                     Intent intent = new Intent(context, ItemDetailActivity.class);

@@ -1,6 +1,7 @@
 package ru.dekar.qr4all.ui;
 
 import android.app.ActivityOptions;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
@@ -13,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import com.google.android.gms.maps.MapFragment;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import ru.dekar.qr4all.R;
@@ -70,6 +72,13 @@ public class ItemDetailActivity extends AppCompatActivity {
             getFragmentManager().beginTransaction()
                     .add(R.id.item_detail_container, fragment)
                     .commit();
+
+            MapFragment mMapFragment = MapFragment.newInstance();
+            FragmentTransaction fragmentTransaction =
+                    getFragmentManager().beginTransaction();
+            fragmentTransaction.add(R.id.map, mMapFragment);
+            fragmentTransaction.commit();
+            mMapFragment.getMapAsync(fragment);
         }
     }
 

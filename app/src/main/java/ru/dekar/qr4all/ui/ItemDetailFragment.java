@@ -248,26 +248,12 @@ public class ItemDetailFragment extends Fragment implements OnMapReadyCallback, 
         setMapMarker();
     }
 
-    public static MapFragment mMapFragment;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         rootView = inflater.inflate(R.layout.item_detail, container, false);
         ButterKnife.bind(this, rootView);
-
-        if (null == mMapFragment)
-        {
-            MapFragment mMapFragment = MapFragment.newInstance();
-            FragmentTransaction fragmentTransaction =
-                    getChildFragmentManager().beginTransaction();
-            fragmentTransaction.add(R.id.map, mMapFragment);
-            fragmentTransaction.commit();
-            mMapFragment.getMapAsync(this);
-        }
-
-
 
         updateUi(rootView, itemId);
 
